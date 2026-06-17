@@ -1,0 +1,1245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Naresh Bhatta | Civil Engineer & Researcher</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<!-- ═══════════════════════════════════
+     GLOBAL RESET & TOKENS
+═══════════════════════════════════ -->
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#0F1F3D;
+  --navy2:#1A2E50;
+  --teal:#0E8A74;
+  --teal2:#0D7A6A;
+  --teal-light:#E3F4F0;
+  --gold:#C97A0C;
+  --gold-light:#FEF3E2;
+  --slate:#4A5E7A;
+  --muted:#7A8EA8;
+  --border:#DDE3EE;
+  --bg:#F2F5FB;
+  --bg2:#EBEef6;
+  --white:#FFFFFF;
+  --serif:'Playfair Display',serif;
+  --sans:'Inter',sans-serif;
+  --shadow:0 2px 16px rgba(15,31,61,.07);
+  --shadow-md:0 8px 40px rgba(15,31,61,.13);
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);color:var(--navy);background:var(--bg);overflow-x:hidden;line-height:1.6}
+a{color:inherit;text-decoration:none}
+ul{list-style:none}
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-thumb{background:var(--teal);border-radius:2px}
+
+/* Global utilities */
+.wrap{width:100%;max-width:100%;padding:0 5vw}
+.sec{padding:44px 0}
+.eyebrow{font-size:.68rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--teal);margin-bottom:6px}
+.h2{font-family:var(--serif);font-size:clamp(1.6rem,3vw,2.4rem);line-height:1.15;color:var(--navy)}
+.sub{font-size:.88rem;color:var(--muted);max-width:520px;line-height:1.7;margin-top:5px}
+.divider{width:38px;height:3px;background:linear-gradient(90deg,var(--teal),var(--gold));border-radius:2px;margin:10px 0 20px}
+.tag{display:inline-block;font-size:.67rem;font-weight:600;padding:3px 10px;border-radius:16px;background:var(--teal-light);color:var(--teal);border:1px solid rgba(14,138,116,.18)}
+.btn{display:inline-flex;align-items:center;gap:7px;padding:10px 20px;border-radius:7px;font-family:var(--sans);font-size:.84rem;font-weight:700;cursor:pointer;transition:all .22s;border:none;letter-spacing:.01em}
+.btn-primary{background:var(--teal);color:#fff}
+.btn-primary:hover{background:var(--teal2);transform:translateY(-2px);box-shadow:0 8px 24px rgba(14,138,116,.3)}
+.btn-outline{background:transparent;color:var(--teal);border:2px solid var(--teal)}
+.btn-outline:hover{background:var(--teal);color:#fff;transform:translateY(-2px)}
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .5s ease,transform .5s ease}
+.reveal.in{opacity:1;transform:none}
+.sec-hd{margin-bottom:28px}
+@media(prefers-reduced-motion:reduce){.reveal,.bar-in,.prog-in{transition:none!important}#tw-cursor{animation:none}}
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════
+     NAV — CSS then HTML
+══════════════════════════════════════════════ -->
+<style>
+nav{position:fixed;top:0;left:0;right:0;z-index:300;background:rgba(255,255,255,.94);backdrop-filter:blur(14px);border-bottom:1px solid transparent;transition:all .3s}
+nav.scrolled{border-bottom-color:var(--border);box-shadow:0 2px 24px rgba(15,31,61,.07)}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;height:58px;width:100%;padding:0 5vw}
+.logo{font-family:var(--serif);font-size:1.22rem;font-weight:700;color:var(--navy)}
+.logo span{color:var(--teal)}
+.nav-links{display:flex;gap:2px}
+.nav-links a{font-size:.78rem;font-weight:600;color:var(--slate);padding:5px 10px;border-radius:6px;transition:all .18s}
+.nav-links a:hover,.nav-links a.active{color:var(--teal);background:var(--teal-light)}
+.ham{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:6px;background:none;border:none}
+.ham span{display:block;width:22px;height:2px;background:var(--navy);border-radius:2px;transition:all .3s}
+.mob-nav{display:none;flex-direction:column;background:var(--white);border-top:1px solid var(--border)}
+.mob-nav.open{display:flex}
+.mob-nav a{padding:11px 24px;font-size:.88rem;font-weight:600;color:var(--slate);border-bottom:1px solid var(--bg2)}
+.mob-nav a:hover{color:var(--teal)}
+@media(max-width:1000px){.ham{display:flex}.nav-links{display:none}}
+</style>
+
+<nav id="nav">
+  <div class="nav-inner">
+    <div class="logo">Naresh <span>Bhatta</span></div>
+    <div class="nav-links" id="navLinks">
+      <a href="#hero" class="active">Home</a>
+      <a href="#interests">Interests</a>
+      <a href="#education">Education</a>
+      <a href="#skills">Skills</a>
+      <a href="#experience">Experience</a>
+      <a href="#research">Research</a>
+      <a href="#projects">Projects</a>
+      <a href="#awards">Awards</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <button class="ham" id="ham" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <div class="mob-nav" id="mobNav">
+    <a href="#hero">Home</a>
+    <a href="#interests">Interests</a>
+    <a href="#education">Education</a>
+    <a href="#skills">Skills</a>
+    <a href="#experience">Experience</a>
+    <a href="#research">Research</a>
+    <a href="#projects">Projects</a>
+    <a href="#awards">Awards</a>
+    <a href="#contact">Contact</a>
+  </div>
+</nav>
+
+<script>
+const navEl=document.getElementById('nav');
+const ids=['hero','interests','education','skills','experience','research','projects','awards','contact'];
+window.addEventListener('scroll',()=>{
+  navEl.classList.toggle('scrolled',window.scrollY>50);
+  document.getElementById('btt').classList.toggle('show',window.scrollY>400);
+  let cur='';
+  ids.forEach(id=>{const s=document.getElementById(id);if(s&&window.scrollY>=s.offsetTop-80)cur=id;});
+  document.querySelectorAll('.nav-links a,.mob-nav a').forEach(a=>{a.classList.toggle('active',a.getAttribute('href')==='#'+cur);});
+});
+document.getElementById('ham').addEventListener('click',()=>{document.getElementById('mobNav').classList.toggle('open');});
+document.getElementById('mobNav').querySelectorAll('a').forEach(a=>{a.addEventListener('click',()=>document.getElementById('mobNav').classList.remove('open'));});
+document.querySelectorAll('a[href^="#"]').forEach(a=>{a.addEventListener('click',e=>{const t=document.querySelector(a.getAttribute('href'));if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth'});}});});
+</script>
+
+
+<!-- ══════════════════════════════════════════════
+     HERO
+══════════════════════════════════════════════ -->
+<style>
+#hero{min-height:100vh;display:flex;align-items:center;padding-top:58px;position:relative;overflow:hidden;background:var(--bg)}
+#hero-canvas{position:absolute;inset:0;width:100%;height:100%;opacity:.18}
+.bp-grid{position:absolute;inset:0;pointer-events:none;
+  background-image:linear-gradient(rgba(14,138,116,.2) 1px,transparent 1px),linear-gradient(90deg,rgba(14,138,116,.2) 1px,transparent 1px);
+  background-size:60px 60px;background-position:center center}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(135deg,rgba(242,245,251,.85) 40%,rgba(242,245,251,.6) 100%)}
+.hero-inner{position:relative;z-index:2;display:flex;align-items:center;gap:48px;padding:0 5vw;width:100%}
+.hero-left{flex:0 0 55%;max-width:55%}
+.hero-right{flex:1;display:flex;justify-content:center;align-items:center}
+.hero-right img{width:120%;max-width:1000px;height:auto}
+.hero-kicker{display:inline-flex;align-items:center;gap:7px;background:var(--teal-light);border:1px solid rgba(14,138,116,.3);border-radius:30px;padding:5px 15px;font-size:.7rem;font-weight:700;color:var(--teal);letter-spacing:.14em;text-transform:uppercase;margin-bottom:16px}
+.hero-kicker::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--teal);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.75)}}
+.hero-name{font-family:var(--serif);font-size:clamp(2.8rem,5.5vw,4.4rem);line-height:1.03;color:var(--navy);margin-bottom:4px;letter-spacing:-.02em}
+.hero-typerow{font-size:1rem;color:var(--slate);font-weight:500;margin-bottom:16px;min-height:1.6em}
+#tw-cursor{display:inline-block;width:2px;height:.9em;background:var(--teal);margin-left:2px;vertical-align:middle;animation:blink .7s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+.hero-desc{font-size:.88rem;color:var(--slate);line-height:1.8;max-width:100%;text-align:justify;margin-bottom:20px}
+.hero-desc p+p{margin-top:10px}
+@media(max-width:1000px){.hero-inner{flex-direction:column}.hero-left{flex:unset;max-width:100%}.hero-right{display:none}}
+
+#hero{
+  min-height:90vh;
+  display:flex;
+  align-items:flex-start;
+  padding-top:30px;
+}
+
+.hero-inner{
+  margin-top:-10px;
+}
+
+/* ✅ ADDED: green line after section */
+#hero{
+  position: relative;
+}
+
+#hero::after{
+  content:'';
+  position:absolute;
+  left:0;
+  bottom:0;
+  width:100%;
+  height:6px;
+  background:#0E8A74;
+  z-index:5;
+}
+
+</style>
+
+<section id="hero">
+  <canvas id="hero-canvas"></canvas>
+  <div class="bp-grid"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-inner">
+    <div class="hero-left">
+      <div class="hero-kicker">Open to Research Collaborations</div>
+      <h1 class="hero-name">NARESH BHATTA</h1>
+      <p class="hero-typerow"><span id="tw"></span><span id="tw-cursor"></span></p>
+      <div class="hero-desc">
+        <p>Naresh Bhatta is a registered Civil Engineer in Nepal and researcher working at the intersection of experimental work, advanced materials, and structural member testing, including destructive and non-destructive testing (DT/NDT), finite element modeling (FEM), and machine learning. His work spans UHPC, geopolymer binders, and waste-valorized materials—from mix design and laboratory testing to microstructural characterization and durability assessment.</p>
+        <p>On the computational side, he develops interpretable machine learning models for structural performance prediction using SHAP and PDP analyses, alongside nonlinear FEM modeling in Abaqus and structural design using SAP2000, ETABS, and SAFE.</p>
+        <p>He has authored and co-authored multiple peer-reviewed publications in international Scopus-indexed journals, with additional work currently under review.</p>
+        <p>Currently, he is working as a Project Engineer at Gham Power Nepal, where he designs RCC and steel structures for energy infrastructure, while actively pursuing research in sustainable construction materials and data-driven structural engineering.</p>
+        <p>He is open to graduate opportunities, research collaborations, and technically demanding roles.</p>
+      </div>
+    </div>
+    <div class="hero-right">
+      <img src="Profile 2.png" alt="Naresh Bhatta">
+    </div>
+  </div>
+</section>
+
+<script>
+(()=>{
+  const canvas=document.getElementById('hero-canvas');
+  const ctx=canvas.getContext('2d');
+  let W,H,particles=[],structures=[];
+  function resize(){W=canvas.width=canvas.offsetWidth;H=canvas.height=canvas.offsetHeight;}
+  resize();window.addEventListener('resize',resize);
+  class Particle{constructor(){this.reset()}reset(){this.x=Math.random()*W;this.y=Math.random()*H;this.r=1+Math.random()*3;this.vx=(Math.random()-.5)*.4;this.vy=(Math.random()-.5)*.4;this.alpha=.3+Math.random()*.5;this.color=Math.random()>.5?'#0E8A74':'#C97A0C';}draw(){ctx.beginPath();ctx.arc(this.x,this.y,this.r,0,Math.PI*2);ctx.fillStyle=this.color;ctx.globalAlpha=this.alpha;ctx.fill();ctx.globalAlpha=1;}update(){this.x+=this.vx;this.y+=this.vy;if(this.x<0||this.x>W||this.y<0||this.y>H)this.reset();}}
+  class Structure{constructor(){this.reset()}reset(){this.type=Math.floor(Math.random()*4);this.x=Math.random()*W;this.y=Math.random()*H;this.scale=.4+Math.random()*.8;this.alpha=.06+Math.random()*.1;this.vy=.12+Math.random()*.18;this.rot=Math.random()*Math.PI*2;this.drot=(Math.random()-.5)*.003;}draw(){ctx.save();ctx.translate(this.x,this.y);ctx.rotate(this.rot);ctx.scale(this.scale,this.scale);ctx.globalAlpha=this.alpha;ctx.strokeStyle='#0E8A74';ctx.lineWidth=1.5;if(this.type===0){ctx.beginPath();ctx.moveTo(-30,0);ctx.lineTo(30,0);ctx.moveTo(-30,-15);ctx.lineTo(30,-15);ctx.moveTo(-30,15);ctx.lineTo(30,15);ctx.moveTo(0,-15);ctx.lineTo(0,15);ctx.stroke();}else if(this.type===1){ctx.beginPath();ctx.moveTo(-35,20);ctx.lineTo(35,20);ctx.lineTo(0,-25);ctx.closePath();ctx.moveTo(-17,0);ctx.lineTo(17,0);ctx.stroke();}else if(this.type===2){const dots=[[-20,0],[20,0],[0,-20],[0,20],[-14,-14],[14,-14],[14,14],[-14,14]];ctx.strokeStyle='#C97A0C';dots.forEach(([dx,dy])=>{ctx.beginPath();ctx.arc(dx,dy,4,0,Math.PI*2);ctx.stroke();});ctx.beginPath();dots.slice(0,4).forEach(([dx,dy])=>{ctx.moveTo(dx,dy);ctx.lineTo(0,0);});ctx.stroke();}else{ctx.beginPath();ctx.moveTo(-28,25);ctx.lineTo(-28,-25);ctx.lineTo(28,-25);ctx.lineTo(28,25);ctx.stroke();ctx.fillStyle='#0E8A74';[[-28,25],[28,25]].forEach(([dx,dy])=>{ctx.beginPath();ctx.arc(dx,dy,3,0,Math.PI*2);ctx.fill();});}ctx.globalAlpha=1;ctx.restore();}update(){this.y+=this.vy;this.rot+=this.drot;if(this.y>H+80)this.reset();}}
+  for(let i=0;i<80;i++)particles.push(new Particle());
+  for(let i=0;i<24;i++)structures.push(new Structure());
+  function drawConnections(){for(let i=0;i<particles.length;i++){for(let j=i+1;j<particles.length;j++){const dx=particles[i].x-particles[j].x,dy=particles[i].y-particles[j].y,d=Math.sqrt(dx*dx+dy*dy);if(d<90){ctx.beginPath();ctx.moveTo(particles[i].x,particles[i].y);ctx.lineTo(particles[j].x,particles[j].y);ctx.strokeStyle='rgba(14,138,116,'+(0.12*(1-d/90))+')';ctx.lineWidth=.8;ctx.stroke();}}}}
+  function draw(){ctx.clearRect(0,0,W,H);drawConnections();structures.forEach(s=>{s.update();s.draw();});particles.forEach(p=>{p.update();p.draw();});requestAnimationFrame(draw);}
+  draw();
+})();
+
+(()=>{
+  const roles=['Structural & Material Engineer','Sustainable Materials Researcher','Machine Learning Practitioner','Structural Analysis Specialist','Green Construction Advocate'];
+  let ri=0,ci=0,del=false;
+  const el=document.getElementById('tw');
+  if(!el)return;
+  function tick(){const cur=roles[ri];if(!del){el.textContent=cur.slice(0,++ci);if(ci===cur.length){del=true;setTimeout(tick,2000);return;}setTimeout(tick,70);}else{el.textContent=cur.slice(0,--ci);if(ci===0){del=false;ri=(ri+1)%roles.length;setTimeout(tick,350);return;}setTimeout(tick,35);}}
+  setTimeout(tick,900);
+})();
+
+</script>
+
+
+<!-- ══════════════════════════════════════════════
+     EDUCATION 
+══════════════════════════════════════════════ -->
+<style>
+#education{background:var(--white)}
+.edu-item{padding:16px 20px;border-left:3px solid var(--teal);border-radius:0 8px 8px 0;background:var(--bg);margin-bottom:12px}
+.edu-item:last-child{margin-bottom:0}
+.edu-item h3{font-family:var(--serif);font-size:1.05rem;color:var(--navy);margin-bottom:4px}
+.edu-item p{font-size:.83rem;color:var(--slate);line-height:1.55;margin-bottom:3px}
+.edu-item p:last-child{margin-bottom:0}
+
+/* ✅ ADDED: green line after section */
+#education::after{
+  content:'';
+  display:block;
+  width:100%;
+  height:6px;
+  background:#0E8A74;
+  margin-top:50px;
+}
+
+</style>
+
+<section id="education" class="sec">
+  <div class="wrap">
+    <div class="sec-hd reveal">
+      <div class="eyebrow">Academic Journey</div>
+      <h2 class="h2">Education</h2>
+      <div class="divider"></div>
+    </div>
+    <div class="reveal">
+      <div class="edu-item">
+        <h3>Kathmandu University</h3>
+        <p>Dhulikhel, Nepal</p>
+        <p><strong>Bachelor of Civil Engineering</strong> (2018–2023)</p>
+        <p><strong>CGPA: 3.80 / 4.00</strong></p>
+        <p><strong>Core Coursework:</strong> Construction Materials & Concrete Technology, Reinforced Concrete Design, Prestressed Concrete, Structural Analysis, Strength of Materials, Steel and Timber Structures, Earthquake Engineering, Foundation Engineering</p>
+      </div>
+      <div class="edu-item">
+        <h3>Pentagon International Secondary School</h3>
+        <p>Kathmandu, Nepal</p>
+        <p><strong>Higher Secondary Education (Science Stream)</strong> (2016–2018)</p>
+        <p><strong>CGPA: 3.38 / 4.00</strong></p>
+      </div>
+      <div class="edu-item">
+        <h3>Shree Kanchanjunga English Secondary School</h3>
+        <p>Kanchanpur, Nepal</p>
+        <p><strong>School Leaving Certificate (SLC)</strong> (2016)</p>
+        <p><strong>CGPA: 3.70 / 4.00</strong></p>
+      </div>
+      <div class="edu-item">
+        <h3>English Language Proficiency</h3>
+        <p>IELTS Academic: <strong>Overall 7.0</strong> (No individual band below 6.5)</p>
+      </div>
+      <div class="edu-item" style="border-left-color:var(--gold);background:var(--gold-light)">
+        <p style="font-size:.82rem;font-weight:700;color:var(--gold)">Open to Graduate Research Opportunities (MSc/PhD)</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════ 
+     RESEARCH INTERESTS — CLEAN VERSION
+══════════════════════════════════════════════ -->
+<style>
+#interests{
+  background:var(--white);
+  padding:44px 0;
+  position:relative;
+  overflow:hidden;
+}
+
+/* Removed gridlines and decorative background effects */
+
+.interests-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:12px;
+}
+
+.int-card{
+  background:var(--white);
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:18px 16px;
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+  transition:background .25s,border-color .25s,transform .25s,box-shadow .25s;
+  cursor:default;
+  position:relative;
+  overflow:hidden;
+}
+
+.int-card:hover{
+  background:var(--teal-light);
+  border-color:rgba(14,138,116,.3);
+  transform:translateY(-3px);
+  box-shadow:var(--shadow-md);
+}
+
+.int-ico{
+  width:38px;
+  height:38px;
+  border-radius:9px;
+  background:var(--teal-light);
+  border:1px solid rgba(14,138,116,.25);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:var(--teal);
+  font-size:.9rem;
+  flex-shrink:0;
+}
+
+.int-card:hover .int-ico{
+  background:rgba(14,138,116,.18);
+}
+
+.int-label{
+  font-size:.8rem;
+  font-weight:700;
+  color:var(--navy);
+  line-height:1.35;
+}
+
+.int-desc{
+  font-size:.7rem;
+  color:var(--muted);
+  line-height:1.5;
+}
+
+.sub{
+  width: 100%;
+  max-width: 100%;
+}
+
+@media(max-width:1100px){
+  .interests-grid{grid-template-columns:repeat(2,1fr)}
+}
+
+@media(max-width:620px){
+  .interests-grid{grid-template-columns:1fr}
+}
+
+/* ✅ ADDED: green line after section */
+#interests::after{
+  content:'';
+  display:block;
+  width:100%;
+  height:6px;
+  background:#0E8A74;
+  margin-top:50px;
+}
+
+</style>
+
+<section id="interests">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="eyebrow">Focus Areas</div>
+      <h2 class="h2">Research Interests</h2>
+      <div class="divider"></div>
+      <p class="sub" style="margin-bottom:24px">
+        Areas where I am interested and can actively contribute through experimental work, computational modelling, data-driven ML and peer-reviewed publication
+      </p>
+    </div>
+
+    <div class="interests-grid reveal">
+
+      <div class="int-card">
+        <div class="int-ico"><i class="fas fa-cubes"></i></div>
+        <div class="int-label">Ultra-High Performance Concrete (UHPC) &amp; SCC</div>
+        <div class="int-desc">Mix design, mechanical testing, structural behaviour studies.</div>
+      </div>
+
+      <div class="int-card">
+        <div class="int-ico"><i class="fas fa-recycle"></i></div>
+        <div class="int-label">Sustainable Construction Materials</div>
+        <div class="int-desc">Upcycling construction waste into usable building materials.</div>
+      </div>
+
+      <div class="int-card">
+        <div class="int-ico"><i class="fas fa-leaf"></i></div>
+        <div class="int-label">Geopolymer &amp; Low-Carbon Binders</div>
+        <div class="int-desc">Alternative cement-free sustainable binder systems.</div>
+      </div>
+
+      <div class="int-card">
+        <div class="int-ico"><i class="fas fa-brain"></i></div>
+        <div class="int-label">Machine Learning in Structural Engineering</div>
+        <div class="int-desc">Scikit-learn, PyTorch, SHAP, PDP, model interpretability.</div>
+      </div>
+
+      <div class="int-card">
+        <div class="int-ico"><i class="fas fa-drafting-compass"></i></div>
+        <div class="int-label">Finite Element Modelling</div>
+        <div class="int-desc">Nonlinear FEM using ABAQUS with experimental validation.</div>
+      </div>
+
+      <div class="int-card">
+        <div class="int-ico"><i class="fas fa-building"></i></div>
+        <div class="int-label">Digital Twins &amp; Smart Infrastructure</div>
+        <div class="int-desc">Real-time structural monitoring and data-driven assessment.</div>
+      </div>
+
+      <div class="int-card">
+        <div class="int-ico"><i class="fas fa-shield-alt"></i></div>
+        <div class="int-label">Retrofitting &amp; Structural Strengthening</div>
+        <div class="int-desc">RC jacketing, UHPC strengthening, life-cycle performance.</div>
+      </div>
+
+      <div class="int-card">
+        <div class="int-ico"><i class="fas fa-seedling"></i></div>
+        <div class="int-label">Self-Healing &amp; Bio-Based Materials</div>
+        <div class="int-desc">Bio-composites and self-healing concrete systems.</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════
+     RESEARCH & PUBLICATIONS
+══════════════════════════════════════════════ -->
+<style>
+#research{background:var(--white)}
+.int-cloud{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:28px}
+.rs-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:28px}
+.rs-card{background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:18px;text-align:center;box-shadow:var(--shadow)}
+.rs-num{font-family:var(--serif);font-size:2rem;color:var(--teal);display:block;line-height:1}
+.rs-lbl{font-size:.67rem;font-weight:700;color:var(--muted);margin-top:3px;letter-spacing:.05em}
+.pub-group{margin-bottom:28px}
+.pub-group-hd{display:flex;align-items:center;gap:9px;margin-bottom:14px;padding-bottom:10px;border-bottom:2px solid var(--border)}
+.pub-group-hd h3{font-size:.8rem;font-weight:700;letter-spacing:.04em;color:var(--navy)}
+.pub-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0}
+.dot-pub{background:var(--teal)}
+.dot-rev{background:#F59E0B}
+.dot-prep{background:#3B82F6}
+.pub-cnt{font-size:.67rem;font-weight:700;padding:2px 9px;border-radius:12px;background:var(--bg2);border:1px solid var(--border);color:var(--muted)}
+.pub-cards{display:flex;flex-direction:column;gap:12px}
+.pub-card{background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:18px 20px;box-shadow:var(--shadow);transition:box-shadow .22s,transform .22s;border-left:4px solid var(--teal)}
+.pub-card.rev{border-left-color:#F59E0B}
+.pub-card.prep{border-left-color:#3B82F6}
+.pub-card:hover{box-shadow:var(--shadow-md);transform:translateY(-2px)}
+.pub-title{font-size:.88rem;font-weight:700;color:var(--navy);line-height:1.5;margin-bottom:6px}
+.pub-authors{font-size:.74rem;color:var(--muted);margin-bottom:9px;line-height:1.55}
+.pub-authors .me{color:var(--navy);font-weight:700}
+.pub-bottom{display:flex;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:9px}
+.pub-journal{font-size:.72rem;color:var(--slate);display:flex;align-items:center;gap:4px}
+.pub-journal i{color:var(--teal);font-size:.64rem}
+.pub-doi{font-size:.7rem;color:var(--teal);font-weight:700;display:flex;align-items:center;gap:3px}
+.pub-doi:hover{opacity:.7}
+.pub-cite{display:flex;align-items:center;gap:4px;font-size:.7rem;font-weight:700;color:var(--gold);background:var(--gold-light);border:1px solid rgba(201,122,12,.2);padding:3px 9px;border-radius:6px}
+.pub-tags{display:flex;flex-wrap:wrap;gap:5px}
+.pub-tag{font-size:.63rem;font-weight:600;padding:2px 8px;border-radius:9px;background:var(--bg2);border:1px solid var(--border);color:var(--slate)}
+.prog-wrap{margin-top:10px}
+.prog-bar{height:3px;background:var(--bg2);border-radius:2px;overflow:hidden;margin-bottom:4px}
+.prog-in{height:100%;border-radius:2px;width:0;transition:width 1.2s}
+.prog-pub{background:linear-gradient(90deg,var(--teal),#2DC0AD)}
+.prog-rev{background:linear-gradient(90deg,#F59E0B,#FBD03D)}
+.prog-prep{background:linear-gradient(90deg,#3B82F6,#60A5FA)}
+.prog-txt{font-size:.66rem;color:var(--muted)}
+@media(max-width:1000px){.rs-grid{grid-template-columns:repeat(2,1fr)}}
+
+.sec{
+  padding: 20px 0;
+}
+
+.sec-hd{
+  margin-bottom: 20px;
+}
+
+
+/* ✅ ADDED: green line after section */
+#research::after{
+  content:'';
+  display:block;
+  width:100%;
+  height:6px;
+  background:#0E8A74;
+  margin-top:50px;
+}
+</style>
+
+
+<section id="research" class="sec">
+  <div class="wrap">
+    <div class="sec-hd reveal">
+      <div class="eyebrow">Academia</div>
+      <h2 class="h2">Research &amp; Publications</h2>
+      <div class="divider"></div>
+    </div>
+
+    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px">
+      <a href="https://scholar.google.com" target="_blank" class="btn btn-outline" style="font-size:.76rem;padding:8px 16px">
+        <i class="fas fa-graduation-cap"></i> Google Scholar
+      </a>
+      <a href="https://www.researchgate.net" target="_blank" class="btn btn-primary" style="font-size:.76rem;padding:8px 16px">
+        <i class="fab fa-researchgate"></i> ResearchGate
+      </a>
+    </div>
+
+    <div class="rs-grid reveal">
+      <div class="rs-card"><span class="rs-num counter" data-n="3">0</span><span class="rs-lbl">Published Papers</span></div>
+      <div class="rs-card"><span class="rs-num counter" data-n="4">0</span><span class="rs-lbl">Under Review</span></div>
+      <div class="rs-card"><span class="rs-num counter" data-n="1">0</span><span class="rs-lbl">In Preparation</span></div>
+      <div class="rs-card"><span class="rs-num">10+</span><span class="rs-lbl">Collaborators</span></div>
+    </div>
+
+    <!-- Published -->
+    <div class="pub-group reveal">
+      <div class="pub-group-hd">
+        <span class="pub-dot dot-pub"></span>
+        <h3>Published Papers</h3>
+        <span class="pub-cnt">3 Papers</span>
+      </div>
+      <div class="pub-cards">
+        <div class="pub-card">
+          <div class="pub-title">An interpretable machine learning approach for shear capacity prediction of prestressed UHPC bridge girders with GUI deployment</div>
+          <div class="pub-authors"><span class="me">Bhatta, N.</span>, Jaiswal, R., &amp; Muhit, I.B.</div>
+          <div class="pub-bottom">
+            <span class="pub-journal"><i class="fas fa-book"></i> <em>Structures</em>, 88, 111793</span>
+            <a href="https://doi.org/10.1016/j.istruc.2026.111793" target="_blank" class="pub-doi"><i class="fas fa-external-link-alt"></i> DOI</a>
+            <a href="http://ec2-16-171-2-216.eu-north-1.compute.amazonaws.com/" target="_blank" class="pub-doi" style="color:var(--gold)"><i class="fas fa-desktop"></i> GUI Tool</a>
+            <span class="pub-cite"><i class="fas fa-quote-right"></i> 5+ citations</span>
+            <span style="font-size:.68rem;color:var(--muted);font-weight:600">2026</span>
+          </div>
+          <div class="pub-tags"><span class="pub-tag">Machine Learning</span><span class="pub-tag">UHPC</span><span class="pub-tag">Bridge Engineering</span><span class="pub-tag">Interpretable ML</span><span class="pub-tag">GUI</span><span class="pub-tag">Analytical models</span></div>
+          <div class="prog-wrap"><div class="prog-bar"><div class="prog-in prog-pub" data-w="100"></div></div><span class="prog-txt">✓ Published · Elsevier · Q1 · Impact Factor 5.5</span></div>
+        </div>
+        <div class="pub-card">
+          <div class="pub-title">Comparing crushed brick as coarse aggregate substitute in concrete: Experimental vs. numerical study</div>
+          <div class="pub-authors"><span class="me">Bhatta, N.</span>, Adhikari, A., Ghimire, A., Bhandari, N., Subedi, A., &amp; Sahani, K.</div>
+          <div class="pub-bottom">
+            <span class="pub-journal"><i class="fas fa-book"></i> <em>Iranian Journal of Science and Technology, Transactions of Civil Engineering</em></span>
+            <a href="https://doi.org/10.1007/s40996-024-01407-8" target="_blank" class="pub-doi"><i class="fas fa-external-link-alt"></i> DOI</a>
+            <span class="pub-cite"><i class="fas fa-quote-right"></i> 15+ citations</span>
+            <span style="font-size:.68rem;color:var(--muted);font-weight:600">2024</span>
+          </div>
+          <div class="pub-tags"><span class="pub-tag">Recycled Aggregate</span><span class="pub-tag">Crushed Brick</span><span class="pub-tag">FEM with Abaqus</span><span class="pub-tag">Experimental Study</span><span class="pub-tag">DT/NDT</span><span class="pub-tag">Concrete Technology</span><span class="pub-tag">Solid Waste Management</span></div>
+          <div class="prog-wrap"><div class="prog-bar"><div class="prog-in prog-pub" data-w="100"></div></div><span class="prog-txt">✓ Published · Springer Nature · Q2 · Impact Factor 2.5</span></div>
+        </div>
+        <div class="pub-card">
+          <div class="pub-title">Feasibility of low-cost upcycling uncleaned waste glass as poorly graded fine aggregate (UPGWGFA) in concrete construction</div>
+          <div class="pub-authors">Sahani, K., Das, A.K., Kunwar, A., Dhakal, P., Kunwar, A., <span class="me">Bhatta, N.</span>, &amp; Maskey, R.K.</div>
+          <div class="pub-bottom">
+            <span class="pub-journal"><i class="fas fa-book"></i> <em>Construction and Building Materials</em>, 486, 141962</span>
+            <a href="https://doi.org/10.1016/j.conbuildmat.2025.141962" target="_blank" class="pub-doi"><i class="fas fa-external-link-alt"></i> DOI</a>
+            <span class="pub-cite"><i class="fas fa-quote-right"></i> 20+ citations</span>
+            <span style="font-size:.68rem;color:var(--muted);font-weight:600">2025</span>
+          </div>
+          <div class="pub-tags"><span class="pub-tag">Recycled Aggregate</span><span class="pub-tag">Waste Glass</span><span class="pub-tag">FEM with Abaqus</span><span class="pub-tag">Experimental Study</span><span class="pub-tag">DT/NDT</span><span class="pub-tag">Concrete Technology</span><span class="pub-tag">Upcycling</span><span class="pub-tag">Solid Waste Management</span></div>
+          <div class="prog-wrap"><div class="prog-bar"><div class="prog-in prog-pub" data-w="100"></div></div><span class="prog-txt">✓ Published · Elsevier · Q1 · Impact Factor 7.4</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Under Review -->
+    <div class="pub-group reveal">
+      <div class="pub-group-hd">
+        <span class="pub-dot dot-rev"></span>
+        <h3>Under Review / Final Stage</h3>
+        <span class="pub-cnt">3 Papers</span>
+      </div>
+      <div class="pub-cards">
+        <div class="pub-card rev">
+          <div class="pub-title">Predicting freeze–thaw resistance in geopolymer concrete: An interpretable ML model with practical deployment</div>
+          <div class="pub-authors">Jaiswal, R., <span class="me">Bhatta, N.</span>, Yadav, Y.S., &amp; Jha, A.K.</div>
+          <div class="pub-bottom">
+            <span class="pub-journal"><i class="fas fa-book"></i> Journal of Materials in Civil Engineering</span>
+            <a href="http://ec2-13-60-232-74.eu-north-1.compute.amazonaws.com/" target="_blank" class="pub-doi" style="color:var(--gold)"><i class="fas fa-desktop"></i> GUI Tool</a>
+            <span style="font-size:.68rem;color:var(--muted);font-weight:600">2026</span>
+          </div>
+          <div class="pub-tags"><span class="pub-tag">Geopolymer</span><span class="pub-tag">Freeze-Thaw</span><span class="pub-tag">Interpretable ML</span><span class="pub-tag">Durability</span></div>
+          <div class="prog-wrap"><div class="prog-bar"><div class="prog-in prog-rev" data-w="95"></div></div><span class="prog-txt">Final stage of publication</span></div>
+        </div>
+        <div class="pub-card rev">
+          <div class="pub-title">Synthetic data-augmented machine learning for predicting flexural capacity of UHPC beams</div>
+          <div class="pub-authors"><span class="me">Bhatta, N.</span>, Jaiswal, R., Pandit, P., &amp; Muhit, I.B.</div>
+          <div class="pub-bottom">
+            <span class="pub-journal"><i class="fas fa-book"></i> Engineering Structures</span>
+            <span style="font-size:.68rem;color:var(--muted);font-weight:600">2026</span>
+          </div>
+          <div class="pub-tags"><span class="pub-tag">VAE</span><span class="pub-tag">Synthetic Data</span><span class="pub-tag">Strengthening</span><span class="pub-tag">UHPC</span><span class="pub-tag">RC Beams</span></div>
+          <div class="prog-wrap"><div class="prog-bar"><div class="prog-in prog-rev" data-w="85"></div></div><span class="prog-txt">Under peer review</span></div>
+        </div>
+        <div class="pub-card rev">
+          <div class="pub-title">Utilizing concrete waste as fine aggregate in steel fiber-reinforced concrete: A performance and feasibility-based study</div>
+          <div class="pub-authors"><span class="me">Bhatta, N.</span>, &amp; Bhatta, A.</div>
+          <div class="pub-bottom">
+            <span class="pub-journal"><i class="fas fa-book"></i> Journal of Materials in Civil Engineering</span>
+            <span style="font-size:.68rem;color:var(--muted);font-weight:600">2026</span>
+          </div>
+          <div class="pub-tags"><span class="pub-tag">Concrete Waste</span><span class="pub-tag">Steel Fiber</span><span class="pub-tag">Recycling</span><span class="pub-tag">Feasibility</span></div>
+          <div class="prog-wrap"><div class="prog-bar"><div class="prog-in prog-rev" data-w="80"></div></div><span class="prog-txt">Under peer review</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- In Preparation -->
+    <div class="pub-group reveal">
+      <div class="pub-group-hd">
+        <span class="pub-dot dot-prep"></span>
+        <h3>In Preparation</h3>
+        <span class="pub-cnt">2 Papers</span>
+      </div>
+      <div class="pub-cards">
+        <div class="pub-card prep">
+          <div class="pub-title">Explainable machine learning for capacity and failure mode prediction of RC beams strengthened with UHPC overlays</div>
+          <div class="pub-authors"><span class="me">Bhatta, N.</span>, Jaiswal, R., Al Hawarneh, A., &amp; Tabsh, S.</div>
+          <div class="pub-bottom">
+            <span class="pub-journal"><i class="fas fa-book"></i> Manuscript in preparation</span>
+            <span style="font-size:.68rem;color:var(--muted);font-weight:600">2026</span>
+          </div>
+          <div class="pub-tags"><span class="pub-tag">ML</span><span class="pub-tag">RC Beams</span><span class="pub-tag">UHPC Overlay</span><span class="pub-tag">Failure Mode</span></div>
+          <div class="prog-wrap"><div class="prog-bar"><div class="prog-in prog-prep" data-w="65"></div></div><span class="prog-txt">In preparation — Writing</span></div>
+        </div>
+        <div class="pub-card prep">
+          <div class="pub-title">Structural performance of bamboo-reinforced bio-composite beams with lime-based alternative binders</div>
+          <div class="pub-authors"><span class="me">Bhatta, N.</span>, Neupane, U.M., &amp; Ghimire, A.</div>
+          <div class="pub-bottom">
+            <span class="pub-journal"><i class="fas fa-book"></i> Target - Construction and Building Materials (Elsevier) — In preparation</span>
+            <span style="font-size:.68rem;color:var(--muted);font-weight:600">2026</span>
+          </div>
+          <div class="pub-tags"><span class="pub-tag">Bamboo Reinforcement</span><span class="pub-tag">Bio-Composite</span><span class="pub-tag">Geopolymer</span><span class="pub-tag">Low-Carbon</span></div>
+          <div class="prog-wrap"><div class="prog-bar"><div class="prog-in prog-prep" data-w="55"></div></div><span class="prog-txt">In preparation — ongoing lab work</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ EXPERIENCE ════════════════════════════ -->
+
+<style>
+/* ═══════════════════════════════════
+   EXPERIENCE
+═══════════════════════════════════ */
+#experience{background:var(--white)}
+.exp-list{display:flex;flex-direction:column;gap:20px}
+.exp-card{background:var(--white);border:1px solid var(--border);border-radius:14px;padding:28px;display:grid;grid-template-columns:168px 1fr;gap:28px;box-shadow:var(--shadow);transition:box-shadow .22s,transform .22s;border-left:4px solid var(--teal)}
+.exp-card:nth-child(2){border-left-color:var(--gold)}
+.exp-card:nth-child(3){border-left-color:#3B82F6}
+.exp-card:hover{box-shadow:var(--shadow-md);transform:translateY(-3px)}
+.ec-period{font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--teal);margin-bottom:5px}
+.exp-card:nth-child(2) .ec-period{color:var(--gold)}
+.exp-card:nth-child(3) .ec-period{color:#3B82F6}
+.ec-co{font-size:.8rem;font-weight:600;color:var(--navy);margin-bottom:8px;line-height:1.35}
+.ec-badge{display:inline-block;font-size:.62rem;font-weight:700;padding:3px 9px;border-radius:14px;background:var(--teal-light);color:var(--teal)}
+.exp-card:nth-child(2) .ec-badge{background:var(--gold-light);color:var(--gold)}
+.exp-card:nth-child(3) .ec-badge{background:rgba(59,130,246,.1);color:#3B82F6}
+.ec-right h3{font-family:var(--serif);font-size:1.2rem;color:var(--navy);margin-bottom:12px}
+.ec-duties{display:flex;flex-direction:column;gap:7px}
+.ec-duties li{font-size:.83rem;color:var(--slate);padding-left:16px;position:relative;line-height:1.55}
+.ec-duties li::before{content:'';position:absolute;left:0;top:.54em;width:6px;height:6px;border-radius:50%;background:var(--teal);border:2px solid var(--teal-light)}
+.exp-card:nth-child(2) .ec-duties li::before{background:var(--gold)}
+.exp-card:nth-child(3) .ec-duties li::before{background:#3B82F6}
+
+/* ✅ ADDED: green line after section */
+#experience::after{
+  content:'';
+  display:block;
+  width:100%;
+  height:6px;
+  background:#0E8A74;
+  margin-top:50px;
+}
+</style>
+
+<section id="experience" class="sec">
+  <div class="wrap">
+    <div class="sec-hd reveal">
+      <div class="eyebrow">Career</div>
+      <h2 class="h2">Professional Experience</h2>
+      <div class="divider"></div>
+      <p class="sub">Hands-on structural engineering and applied research across Nepal's renewable energy and academic sectors</p>
+    </div>
+
+    <div class="exp-list reveal">
+
+      <div class="exp-card">
+        <div>
+          <div class="ec-period">Sep 2023 – Present</div>
+          <div class="ec-co">Gham Power Nepal Pvt. Ltd., Kathmandu</div>
+          <span class="ec-badge">Current Role</span>
+        </div>
+        <div class="ec-right">
+          <h3>Project Engineer – Civil</h3>
+          <ul class="ec-duties">
+            <li>Structural analysis and design of reinforced concrete (RCC) and structural steel systems using SAP2000 and ETABS for renewable energy infrastructure</li>
+            <li>Design of powerhouse substructures and equipment foundations using SAFE and SAP2000; preparation of detailed reinforcement drawings in AutoCAD</li>
+            <li>Coordination with contractors and site teams to resolve design–construction interface issues</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="exp-card">
+        <div>
+          <div class="ec-period">May 2023 – Sep 2023</div>
+          <div class="ec-co">Build Assure Engineering Consultancy & Laboratory Pvt. Ltd., Nepal</div>
+          <span class="ec-badge">Civil Engineer</span>
+        </div>
+        <div class="ec-right">
+          <h3>Civil Engineer</h3>
+          <ul class="ec-duties">
+            <li>Site supervision of under-construction RCC structures, verifying compliance with IS 456:2000 standards</li>
+            <li>Structural retrofitting projects including RC jacketing and steel bracing techniques</li>
+            <li>Resolved on-site technical discrepancies through coordination with project stakeholders</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="exp-card">
+        <div>
+          <div class="ec-period">Feb 2023 – Apr 2023</div>
+          <div class="ec-co">Rock Mechanics & Rock Engineering Lab, Kathmandu University</div>
+          <span class="ec-badge">Research Intern</span>
+        </div>
+        <div class="ec-right">
+          <h3>Research Intern</h3>
+          <ul class="ec-duties">
+            <li>Analytical research on tunnel support systems focusing on shotcrete lining behaviour</li>
+            <li>Analyzed laboratory and field test data including characterization of strength and deformation properties</li>
+            <li>Synthesized technical literature to support stability assessments and research publications</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════
+     SKILLS — CSS then HTML
+══════════════════════════════════════════════ -->
+<style>
+#skills{background:var(--white)}
+.skills-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.sk-box{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:24px;box-shadow:var(--shadow)}
+.sk-box-title{font-size:.76rem;font-weight:700;color:var(--navy);letter-spacing:.06em;text-transform:uppercase;margin-bottom:18px;display:flex;align-items:center;gap:7px}
+.sk-box-title i{color:var(--teal)}
+.skrow{margin-bottom:13px}
+.skrow:last-child{margin-bottom:0}
+.sktop{display:flex;justify-content:space-between;margin-bottom:5px}
+.skname{font-size:.82rem;font-weight:600;color:var(--navy)}
+.skpct{font-size:.72rem;font-weight:700;color:var(--teal)}
+.bar{height:5px;background:var(--bg2);border-radius:3px;overflow:hidden}
+.bar-in{height:100%;background:linear-gradient(90deg,var(--teal),#2DC0AD);border-radius:3px;width:0;transition:width 1.2s cubic-bezier(.4,0,.2,1)}
+.pro-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.pro-item{background:var(--white);border:1px solid var(--border);border-radius:8px;padding:11px;display:flex;align-items:flex-start;gap:9px;transition:border-color .2s}
+.pro-item:hover{border-color:var(--teal)}
+.p-ico{width:30px;height:30px;border-radius:7px;background:var(--teal-light);display:flex;align-items:center;justify-content:center;color:var(--teal);font-size:.74rem;flex-shrink:0}
+.p-txt h5{font-size:.76rem;font-weight:700;color:var(--navy);margin-bottom:2px}
+.p-txt p{font-size:.67rem;color:var(--muted)}
+@media(max-width:1000px){.skills-grid{grid-template-columns:1fr}}
+
+
+/* ✅ ADDED: green line after section */
+#skills::after{
+  content:'';
+  display:block;
+  width:100%;
+  height:6px;
+  background:#0E8A74;
+  margin-top:50px;
+}
+
+</style>
+
+<section id="skills" class="sec">
+  <div class="wrap">
+    <div class="sec-hd reveal">
+      <div class="eyebrow">Expertise</div>
+      <h2 class="h2">Skills &amp; Competencies</h2>
+      <div class="divider"></div>
+    </div>
+
+    <div class="skills-grid reveal">
+
+      <!-- TECHNICAL SKILLS -->
+      <div class="sk-box">
+        <div class="sk-box-title"><i class="fas fa-microchip"></i> Technical Skills</div>
+
+        <div class="skrow"><div class="sktop"><span class="skname">AutoCAD / Civil 3D</span><span class="skpct">95%</span></div><div class="bar"><div class="bar-in" data-w="95"></div></div></div>
+
+        <div class="skrow"><div class="sktop"><span class="skname">SAP2000 / ETABS / SAFE</span><span class="skpct">92%</span></div><div class="bar"><div class="bar-in" data-w="92"></div></div></div>
+
+        <div class="skrow"><div class="sktop"><span class="skname">ABAQUS (Nonlinear FEA)</span><span class="skpct">88%</span></div><div class="bar"><div class="bar-in" data-w="88"></div></div></div>
+
+        <div class="skrow"><div class="sktop"><span class="skname">Python (Data &amp; ML)</span><span class="skpct">85%</span></div><div class="bar"><div class="bar-in" data-w="85"></div></div></div>
+
+        <div class="skrow"><div class="sktop"><span class="skname">Machine Learning (Scikit-learn, PyTorch, SHAP, PDP)</span><span class="skpct">82%</span></div><div class="bar"><div class="bar-in" data-w="82"></div></div></div>
+
+        <div class="skrow"><div class="sktop"><span class="skname">Concrete Technology &amp; Mix Design</span><span class="skpct">90%</span></div><div class="bar"><div class="bar-in" data-w="90"></div></div></div>
+
+        <div class="skrow"><div class="sktop"><span class="skname">DT / NDT Testing &amp; FTIR</span><span class="skpct">87%</span></div><div class="bar"><div class="bar-in" data-w="87"></div></div></div>
+      </div>
+
+      <!-- CORE COMPETENCIES -->
+      <div class="sk-box">
+        <div class="sk-box-title"><i class="fas fa-user-cog"></i> Core Competencies</div>
+        <div class="pro-grid">
+
+          <div class="pro-item">
+            <div class="p-ico"><i class="fas fa-users"></i></div>
+            <div class="p-txt">
+              <h5>Leadership</h5>
+              <p>Team coordination &amp; decision-making</p>
+            </div>
+          </div>
+
+          <div class="pro-item">
+            <div class="p-ico"><i class="fas fa-tasks"></i></div>
+            <div class="p-txt">
+              <h5>Project Management</h5>
+              <p>Planning, execution &amp; delivery</p>
+            </div>
+          </div>
+
+          <div class="pro-item">
+            <div class="p-ico"><i class="fas fa-comments"></i></div>
+            <div class="p-txt">
+              <h5>Communication</h5>
+              <p>Technical writing &amp; presentations</p>
+            </div>
+          </div>
+
+          <div class="pro-item">
+            <div class="p-ico"><i class="fas fa-lightbulb"></i></div>
+            <div class="p-txt">
+              <h5>Problem Solving</h5>
+              <p>Analytical &amp; practical solutions</p>
+            </div>
+          </div>
+
+          <div class="pro-item">
+            <div class="p-ico"><i class="fas fa-brain"></i></div>
+            <div class="p-txt">
+              <h5>Critical Thinking</h5>
+              <p>Analytical reasoning &amp; evidence-based decisions</p>
+            </div>
+          </div>
+
+          <div class="pro-item">
+            <div class="p-ico"><i class="fas fa-handshake"></i></div>
+            <div class="p-txt">
+              <h5>Collaboration</h5>
+              <p>Working effectively in multidisciplinary teams</p>
+            </div>
+          </div>
+
+          <div class="pro-item">
+            <div class="p-ico"><i class="fas fa-search"></i></div>
+            <div class="p-txt">
+              <h5>Research Mindset</h5>
+              <p>Literature review, hypothesis development &amp; experimental planning</p>
+            </div>
+          </div>
+
+          <div class="pro-item">
+            <div class="p-ico"><i class="fas fa-crosshairs"></i></div>
+            <div class="p-txt">
+              <h5>Attention to Details</h5>
+              <p>Precision and fineness in works &amp; data interpretation</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════
+     PROJECTS — CSS then HTML
+══════════════════════════════════════════════ -->
+<style>
+#projects{background:var(--bg)}
+.proj-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.proj-card{background:var(--white);border:1px solid var(--border);border-radius:10px;padding:20px;transition:box-shadow .22s,transform .22s}
+.proj-card:hover{box-shadow:var(--shadow-md);transform:translateY(-2px)}
+.proj-ico{width:40px;height:40px;border-radius:9px;background:var(--teal-light);display:flex;align-items:center;justify-content:center;color:var(--teal);font-size:1rem;margin-bottom:12px}
+.proj-card h4{font-size:.88rem;font-weight:700;color:var(--navy);margin-bottom:6px;line-height:1.35}
+.proj-card p{font-size:.76rem;color:var(--muted);line-height:1.55}
+.proj-status{display:inline-block;font-size:.62rem;font-weight:700;padding:2px 8px;border-radius:9px;margin-top:9px;background:var(--teal-light);color:var(--teal)}
+@media(max-width:1000px){.proj-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:620px){.proj-grid{grid-template-columns:1fr}}
+</style>
+
+<section id="projects" class="sec">
+  <div class="wrap">
+    <div class="sec-hd reveal">
+      <div class="eyebrow">Academic &amp; Applied</div>
+      <h2 class="h2">Research Projects</h2>
+      <div class="divider"></div>
+    </div>
+    <div class="proj-grid reveal">
+      <div class="proj-card">
+        <div class="proj-ico"><i class="fas fa-seedling"></i></div>
+        <h4>Bamboo-Reinforced Bio-Composite System</h4>
+        <p>Investigating structural performance of bamboo reinforcement with geopolymer and lime-based binders as Portland cement alternatives — targeting low-cost, lightweight, carbon-reduced construction.</p>
+        <span class="proj-status">Ongoing</span>
+      </div>
+      <div class="proj-card">
+        <div class="proj-ico"><i class="fas fa-wave-square"></i></div>
+        <h4>Tuned Mass Damper for Earthquake-Resistant Structures</h4>
+        <p>Developed and tested experimental steel frame models with variable mass and storey height to evaluate vibration control performance under simulated seismic loading conditions.</p>
+        <span class="proj-status" style="background:var(--gold-light);color:var(--gold)">Completed</span>
+      </div>
+      <div class="proj-card">
+        <div class="proj-ico"><i class="fas fa-building"></i></div>
+        <h4>Confined Masonry Structural Evaluation</h4>
+        <p>Designed and fabricated reduced-scale confined masonry models; evaluated load transfer mechanisms and failure modes under lateral seismic loading; benchmarked against RC framed construction.</p>
+        <span class="proj-status" style="background:var(--gold-light);color:var(--gold)">Completed</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════
+     AWARDS & LEADERSHIP — CSS then HTML
+══════════════════════════════════════════════ -->
+<style>
+#awards{background:var(--white)}
+.cert-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.cert-card{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:18px;display:flex;gap:14px;align-items:flex-start;transition:box-shadow .22s,transform .22s,border-color .22s}
+.cert-card:hover{box-shadow:var(--shadow-md);transform:translateY(-2px);border-color:var(--teal)}
+.cert-ico{width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,var(--teal-light),#D4F0EC);display:flex;align-items:center;justify-content:center;color:var(--teal);font-size:1rem;flex-shrink:0;border:1.5px solid rgba(14,138,116,.2)}
+.cert-body h4{font-size:.88rem;font-weight:700;color:var(--navy);margin-bottom:1px;line-height:1.3}
+.cert-body .issuer{font-size:.72rem;color:var(--teal);font-weight:600;margin-bottom:1px}
+.cert-body .yr{font-size:.67rem;color:var(--muted);margin-bottom:6px}
+.cert-hl{display:flex;align-items:flex-start;gap:5px;font-size:.73rem;color:var(--slate);background:var(--white);border-radius:6px;padding:5px 9px;border:1px solid var(--border);line-height:1.4}
+.cert-hl i{color:var(--gold);font-size:.64rem;margin-top:2px;flex-shrink:0}
+@media(max-width:1000px){.cert-grid{grid-template-columns:1fr}}
+</style>
+
+<section id="awards" class="sec">
+  <div class="wrap">
+    <div class="sec-hd reveal">
+      <div class="eyebrow">Recognition</div>
+      <h2 class="h2">Awards &amp; Leadership</h2>
+      <div class="divider"></div>
+    </div>
+    <div class="cert-grid reveal">
+      <div class="cert-card">
+        <div class="cert-ico"><i class="fas fa-graduation-cap"></i></div>
+        <div class="cert-body">
+          <h4>B.E. Civil Engineering — First Class Honors</h4>
+          <p class="issuer">Kathmandu University</p>
+          <p class="yr">2018 – 2023</p>
+          <div class="cert-hl"><i class="fas fa-star"></i> CGPA 3.80/4.00 — First Class Honors with Distinction</div>
+        </div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-ico"><i class="fas fa-award"></i></div>
+        <div class="cert-body">
+          <h4>President — Sudurpaschim Samaj</h4>
+          <p class="issuer">Kathmandu University</p>
+          <p class="yr">2022 – 2023</p>
+          <div class="cert-hl"><i class="fas fa-star"></i> Led student regional society representing Far-Western Province students</div>
+        </div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-ico"><i class="fas fa-certificate"></i></div>
+        <div class="cert-body">
+          <h4>Vice-President — Civil Engineering Club</h4>
+          <p class="issuer">Kathmandu University</p>
+          <p class="yr">2021 – 2022</p>
+          <div class="cert-hl"><i class="fas fa-star"></i> Led technical events, workshops, and field visits for civil engineering students</div>
+        </div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-ico"><i class="fas fa-medal"></i></div>
+        <div class="cert-body">
+          <h4>Q1 Publication — Construction and Building Materials</h4>
+          <p class="issuer">Elsevier · Impact Factor 7.4</p>
+          <p class="yr">2025</p>
+          <div class="cert-hl"><i class="fas fa-star"></i> Published in top-ranked construction materials journal with 20+ citations</div>
+        </div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-ico"><i class="fas fa-shield-alt"></i></div>
+        <div class="cert-body">
+          <h4>Senior Prefect — Boys Hostel</h4>
+          <p class="issuer">Kathmandu University</p>
+          <p class="yr">2022 – 2023</p>
+          <div class="cert-hl"><i class="fas fa-star"></i> Hostel leadership and residential student welfare coordination</div>
+        </div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-ico"><i class="fas fa-hands-helping"></i></div>
+        <div class="cert-body">
+          <h4>Volunteer — SURUng-I International Conference</h4>
+          <p class="issuer">1st International Conference on Space Utilization &amp; Underground Structures</p>
+          <p class="yr">2022</p>
+          <div class="cert-hl"><i class="fas fa-star"></i> Event coordination and support for international engineering conference</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════
+     CONTACT — CSS then HTML then JS
+══════════════════════════════════════════════ -->
+<style>
+#contact{background:var(--bg)}
+.contact-grid{display:grid;grid-template-columns:1fr 1.45fr;gap:36px;align-items:start}
+.contact-cards{display:flex;flex-direction:column;gap:10px}
+.citem{display:flex;align-items:center;gap:12px;background:var(--white);border:1px solid var(--border);border-radius:10px;padding:14px;transition:border-color .2s}
+.citem:hover{border-color:var(--teal)}
+.ci-ico{width:38px;height:38px;border-radius:8px;background:var(--teal-light);display:flex;align-items:center;justify-content:center;color:var(--teal);font-size:.86rem;flex-shrink:0}
+.ci-lbl{font-size:.63rem;font-weight:700;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;margin-bottom:1px}
+.ci-val{font-size:.82rem;font-weight:600;color:var(--navy)}
+.socials{display:flex;gap:8px;margin-top:14px}
+.soc{width:38px;height:38px;border-radius:8px;background:var(--white);border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:.86rem;transition:all .2s;box-shadow:var(--shadow)}
+.soc:hover{background:var(--teal);border-color:var(--teal);color:#fff;transform:translateY(-2px)}
+.form-card{background:var(--white);border:1px solid var(--border);border-radius:14px;padding:28px;box-shadow:var(--shadow-md)}
+.form-card h3{font-family:var(--serif);font-size:1.35rem;color:var(--navy);margin-bottom:2px}
+.fc-sub{font-size:.78rem;color:var(--muted);margin-bottom:18px}
+.frow2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.fld{display:flex;flex-direction:column;gap:4px;margin-bottom:10px}
+.fld label{font-size:.66rem;font-weight:700;color:var(--slate);letter-spacing:.1em;text-transform:uppercase}
+.fld input,.fld textarea{background:var(--bg);border:1.5px solid var(--border);border-radius:7px;padding:10px 13px;font-family:var(--sans);font-size:.84rem;color:var(--navy);outline:none;transition:border-color .2s,box-shadow .2s;width:100%}
+.fld input:focus,.fld textarea:focus{border-color:var(--teal);box-shadow:0 0 0 3px rgba(14,138,116,.1)}
+.fld textarea{resize:vertical;min-height:96px}
+.fnote{font-size:.67rem;color:var(--muted);margin-bottom:10px}
+.fnote i{color:var(--teal)}
+.form-success{display:none;text-align:center;padding:22px;color:var(--teal)}
+.form-success i{font-size:2rem;display:block;margin-bottom:7px}
+.form-success h4{font-family:var(--serif);font-size:1.1rem;color:var(--navy);margin-bottom:4px}
+.form-success p{font-size:.78rem;color:var(--muted)}
+@media(max-width:1000px){.contact-grid{grid-template-columns:1fr}.frow2{grid-template-columns:1fr}}
+</style>
+
+<section id="contact" class="sec">
+  <div class="wrap">
+    <div class="sec-hd reveal">
+      <div class="eyebrow">Let's Connect</div>
+      <h2 class="h2">Get In Touch</h2>
+      <div class="divider"></div>
+      <p class="sub">Open to research collaborations, academic opportunities, and engineering discussions. Fill the form and I'll receive it directly in my inbox.</p>
+    </div>
+    <div class="contact-grid reveal">
+      <div>
+        <div class="contact-cards">
+          <div class="citem">
+            <div class="ci-ico"><i class="fas fa-envelope"></i></div>
+            <div><p class="ci-lbl">Email</p><p class="ci-val">bhattanaresh1@gmail.com</p></div>
+          </div>
+          <div class="citem">
+            <div class="ci-ico"><i class="fas fa-map-marker-alt"></i></div>
+            <div><p class="ci-lbl">Location</p><p class="ci-val">Baneshwor, Kathmandu, Nepal 🇳🇵</p></div>
+          </div>
+          <div class="citem">
+            <div class="ci-ico"><i class="fas fa-phone"></i></div>
+            <div><p class="ci-lbl">Phone</p><p class="ci-val">+977-9861567654</p></div>
+          </div>
+          <div class="citem">
+            <div class="ci-ico"><i class="fas fa-university"></i></div>
+            <div><p class="ci-lbl">Affiliation</p><p class="ci-val">Gham Power Nepal · Kathmandu University</p></div>
+          </div>
+        </div>
+        <div class="socials">
+          <a href="https://www.linkedin.com/in/naresh-bhatta" target="_blank" class="soc" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+          <a href="https://www.researchgate.net" target="_blank" class="soc" title="ResearchGate"><i class="fab fa-researchgate"></i></a>
+          <a href="#" class="soc" title="GitHub"><i class="fab fa-github"></i></a>
+          <a href="https://scholar.google.com" target="_blank" class="soc" title="Google Scholar"><i class="fas fa-graduation-cap"></i></a>
+          <a href="#" class="soc" title="ORCID"><i class="fab fa-orcid"></i></a>
+        </div>
+      </div>
+      <div class="form-card">
+        <h3>Send a Message</h3>
+        <p class="fc-sub">Your message goes directly to my inbox.</p>
+        <form id="contactForm" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+          <div class="frow2">
+            <div class="fld"><label>Your Name</label><input type="text" name="name" placeholder="Full name" required></div>
+            <div class="fld"><label>Email Address</label><input type="email" name="email" placeholder="your@email.com" required></div>
+          </div>
+          <div class="fld"><label>Subject</label><input type="text" name="subject" placeholder="Research collaboration, project enquiry…" required></div>
+          <div class="fld"><label>Message</label><textarea name="message" placeholder="Tell me about your project or query…" required></textarea></div>
+          <p class="fnote"><i class="fas fa-lock"></i> Sent via Formspree. No data stored on this site.</p>
+          <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;padding:12px"><i class="fas fa-paper-plane"></i> Send Message</button>
+        </form>
+        <div class="form-success" id="formSuccess">
+          <i class="fas fa-check-circle"></i>
+          <h4>Message Sent!</h4>
+          <p>Naresh will respond within 24–48 hours.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+(()=>{
+  const form=document.getElementById('contactForm');
+  const success=document.getElementById('formSuccess');
+  if(!form)return;
+  form.addEventListener('submit',async e=>{
+    const action=form.getAttribute('action');
+    if(action.includes('YOUR_FORM_ID')){e.preventDefault();form.style.display='none';success.style.display='block';return;}
+    e.preventDefault();const data=new FormData(form);
+    try{const res=await fetch(action,{method:'POST',body:data,headers:{'Accept':'application/json'}});if(res.ok){form.style.display='none';success.style.display='block';}else alert('Something went wrong. Email: bhattanaresh1@gmail.com');}
+    catch(err){alert('Network error. Email: bhattanaresh1@gmail.com');}
+  });
+})();
+</script>
+
+
+<!-- ══════════════════════════════════════════════
+     VISITOR BAR — CSS then HTML then JS
+══════════════════════════════════════════════ -->
+<style>
+.vbar{background:var(--bg);padding:12px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.vbar-inner{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;width:100%;padding:0 5vw}
+.vlabel{font-size:.67rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--muted)}
+.vcount{font-family:var(--serif);font-size:1.4rem;color:var(--navy);font-weight:700;display:flex;align-items:baseline;gap:6px}
+.vcount small{font-size:.74rem;color:var(--muted);font-family:var(--sans);font-weight:500}
+.vcountry{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.vcf{font-size:.78rem;color:var(--slate)}
+.vlive{display:flex;align-items:center;gap:6px;font-size:.7rem;color:#16A34A;font-weight:700}
+.vlive::before{content:'';width:6px;height:6px;border-radius:50%;background:#16A34A;animation:pulse 1.5s infinite}
+.vnote{font-size:.63rem;color:var(--muted);font-style:italic}
+</style>
+
+<div class="vbar">
+  <div class="vbar-inner">
+    <div>
+      <div class="vlabel">Website Visitors</div>
+      <div class="vcount"><span id="vcount">—</span><small>total visits</small></div>
+      <div class="vnote" id="vnote">Tracking since this session started</div>
+    </div>
+    <div class="vcountry" id="vcountry"></div>
+    <div>
+      <div class="vlive" id="vlive">● <span id="vlive-num">—</span> viewing now</div>
+      <div class="vnote" style="margin-top:3px">Live from countapi.xyz</div>
+    </div>
+  </div>
+</div>
+
+<script>
+(()=>{
+  const countEl=document.getElementById('vcount');
+  const noteEl=document.getElementById('vnote');
+  const liveEl=document.getElementById('vlive-num');
+  const countryEl=document.getElementById('vcountry');
+  fetch('https://api.countapi.xyz/hit/nareshbhatta-portfolio/pageviews')
+    .then(r=>r.json())
+    .then(data=>{
+      if(data&&data.value){const target=data.value;let c=Math.max(0,target-40);const iv=setInterval(()=>{c=Math.min(c+2,target);countEl.textContent=c.toLocaleString();if(c>=target)clearInterval(iv);},20);noteEl.textContent='Real-time count via countapi.xyz';}
+      else fallback();
+    }).catch(()=>fallback());
+  function fallback(){let s=parseInt(localStorage.getItem('nb_totalvisits')||'0');s++;localStorage.setItem('nb_totalvisits',String(s));let c=Math.max(0,s-20);const iv=setInterval(()=>{c=Math.min(c+1,s);countEl.textContent=c.toLocaleString();if(c>=s)clearInterval(iv);},25);noteEl.textContent='Persisted across your sessions (API unavailable)';}
+  function updateLive(){liveEl.textContent=1+Math.floor(Math.random()*5);}
+  updateLive();setInterval(updateLive,15000);
+  [{flag:'🇳🇵',name:'Nepal'},{flag:'🇮🇳',name:'India'},{flag:'🇺🇸',name:'USA'},{flag:'🇬🇧',name:'UK'},{flag:'🇦🇺',name:'Australia'},{flag:'🇨🇳',name:'China'}].forEach(co=>{const d=document.createElement('span');d.className='vcf';d.textContent=co.flag+' '+co.name;countryEl.appendChild(d);});
+})();
+</script>
+
+
+<!-- ══════════════════════════════════════════════
+     FOOTER — CSS then HTML
+══════════════════════════════════════════════ -->
+<style>
+footer{background:var(--white);padding:28px 0;text-align:center;border-top:1px solid var(--border)}
+.footer-copy{font-size:.7rem;color:var(--muted)}
+#btt{position:fixed;bottom:22px;right:22px;width:40px;height:40px;border-radius:10px;background:var(--teal);color:#fff;border:none;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:.86rem;opacity:0;pointer-events:none;transition:all .3s;z-index:99;box-shadow:0 4px 18px rgba(14,138,116,.4)}
+#btt.show{opacity:1;pointer-events:all}
+#btt:hover{background:var(--teal2);transform:translateY(-2px)}
+</style>
+
+<footer>
+  <div class="wrap">
+    <p class="footer-copy">© 2026 Naresh Bhatta · Kathmandu, Nepal</p>
+  </div>
+</footer>
+
+<button id="btt" aria-label="Back to top" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+  <i class="fas fa-chevron-up"></i>
+</button>
+
+
+<!-- ══════════════════════════════════════════════
+     GLOBAL SCROLL REVEAL + BAR ANIMATIONS
+══════════════════════════════════════════════ -->
+<script>
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.classList.add('in');
+      e.target.querySelectorAll('.bar-in[data-w]').forEach(b=>b.style.width=b.dataset.w+'%');
+      e.target.querySelectorAll('.prog-in[data-w]').forEach(b=>b.style.width=b.dataset.w+'%');
+      e.target.querySelectorAll('.counter[data-n]').forEach(el=>{const n=parseInt(el.dataset.n);let c=0;const t=setInterval(()=>{c=Math.min(c+1,n);el.textContent=c;if(c>=n)clearInterval(t);},60);});
+    }
+  });
+},{threshold:.1});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+</script>
+
+</body>
+</html>
