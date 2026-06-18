@@ -958,9 +958,6 @@ document.querySelectorAll('a[href^="#"]').forEach(a=>{a.addEventListener('click'
 <!-- ══════════════════════════════════════════════
      VISITOR BAR
 ══════════════════════════════════════════════ -->
-<!-- ══════════════════════════════════════════════
-     VISITOR BAR
-══════════════════════════════════════════════ -->
 <style>
 .vbar{background:var(--bg);padding:12px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
 .vbar-inner{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;width:100%;padding:0 5vw}
@@ -997,28 +994,37 @@ document.addEventListener('DOMContentLoaded', () => {
   const liveEl   = document.getElementById('vlive-num');
   const countryEl= document.getElementById('vcountry');
 
-  // Show cached total immediately — never blank on load
+  // Show cached total immediately — never blank
   const cached = localStorage.getItem('nb_last_total');
   countEl.textContent = cached ? parseInt(cached).toLocaleString() : '...';
   liveEl.textContent  = '...';
 
-  // Same sid = same browser never double-counts total
-  let sid = localStorage.getItem('nb_sid');
-  if (!sid) {
-    sid = Date.now().toString(36) + Math.random().toString(36).slice(2, 9);
-    localStorage.setItem('nb_sid', sid);
+  // BROWSER sid — stored in localStorage, permanent per browser
+  // Used only for counting unique total visits
+  let browserSid = localStorage.getItem('nb_browser_sid');
+  if (!browserSid) {
+    browserSid = 'b_' + Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
+    localStorage.setItem('nb_browser_sid', browserSid);
+  }
+
+  // TAB sid — stored in sessionStorage, unique per tab, gone when tab closes
+  // Used for counting currently active viewers
+  let tabSid = sessionStorage.getItem('nb_tab_sid');
+  if (!tabSid) {
+    tabSid = 't_' + Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
+    sessionStorage.setItem('nb_tab_sid', tabSid);
   }
 
   function setLive(n) {
     liveEl.style.opacity = '0';
     setTimeout(() => {
-      liveEl.textContent = Math.max(1, parseInt(n) || 1);
+      liveEl.textContent = Math.max(0, parseInt(n) || 0);
       liveEl.style.opacity = '1';
     }, 200);
   }
 
   function setTotal(n) {
-    if (!n && n !== 0) return;
+    if (n == null) return;
     localStorage.setItem('nb_last_total', n);
     countEl.textContent = parseInt(n).toLocaleString();
   }
@@ -1034,8 +1040,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 25);
   }
 
-  // ── 1. Register visit on page load ──
-  fetch(API + '/api/visit?sid=' + sid, { method: 'POST' })
+  // ── 1. Register visit — send BOTH sids ──
+  // browserSid tracks unique visits, tabSid tracks active tabs
+  fetch(API + '/api/visit?sid=' + browserSid + '&tabsid=' + tabSid, { method: 'POST' })
     .then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
     .then(data => {
       animateTotal(data.total || 0);
@@ -1050,15 +1057,15 @@ document.addEventListener('DOMContentLoaded', () => {
       noteEl.textContent = 'Could not reach API';
     });
 
-  // ── 2. Heartbeat every 25s — keeps THIS tab alive in KV ──
+  // ── 2. Heartbeat every 25s — keeps THIS tab alive ──
   setInterval(() => {
-    fetch(API + '/api/heartbeat?sid=' + sid, { method: 'POST' })
+    fetch(API + '/api/heartbeat?sid=' + tabSid, { method: 'POST' })
       .then(r => r.json())
       .then(data => { if (data.active != null) setLive(data.active); })
       .catch(() => {});
   }, 25000);
 
-  // ── 3. Poll every 10s — real-time count for all viewers ──
+  // ── 3. Poll every 10s — refresh both counts ──
   setInterval(() => {
     fetch(API + '/api/stats')
       .then(r => r.json())
@@ -1070,9 +1077,9 @@ document.addEventListener('DOMContentLoaded', () => {
       .catch(() => {});
   }, 10000);
 
-  // ── 4. Decrement immediately when tab closes ──
+  // ── 4. Remove THIS tab from active on close ──
   window.addEventListener('beforeunload', () => {
-    navigator.sendBeacon(API + '/api/leave?sid=' + sid);
+    navigator.sendBeacon(API + '/api/leave?sid=' + tabSid);
   });
 
   // ── 5. Country flags ──
@@ -1086,7 +1093,6 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 </script>
-
 
 <!-- ══════════════════════════════════════════════
      FOOTER
