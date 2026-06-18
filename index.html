@@ -994,50 +994,50 @@ document.querySelectorAll('a[href^="#"]').forEach(a=>{a.addEventListener('click'
   const liveEl    = document.getElementById('vlive-num');
   const countryEl = document.getElementById('vcountry');
 
-  // Generate or restore a session ID so this tab is tracked uniquely
-  let sid = sessionStorage.getItem('nb_sid');
+  // Use localStorage for sid so same browser doesn't count multiple times
+  // but different browsers/devices each get their own
+  let sid = localStorage.getItem('nb_sid');
   if (!sid) {
-    sid = crypto.randomUUID();
-    sessionStorage.setItem('nb_sid', sid);
+    sid = Date.now().toString(36) + Math.random().toString(36).slice(2, 9);
+    localStorage.setItem('nb_sid', sid);
   }
 
-  // ── 1. Record visit on page load ──
+  // ── 1. Register visit ──
   fetch(API + '/api/visit?sid=' + sid, { method: 'POST' })
-    .then(r => r.json())
-    .then(data => {
-      if (data.total) {
-        animateCount(countEl, data.total);
-        noteEl.textContent = 'Real-time count via Cloudflare KV';
-      } else {
-        fallback();
-      }
-      if (data.active != null) liveEl.textContent = data.active;
+    .then(r => {
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      return r.json();
     })
-    .catch(() => fallback());
+    .then(data => {
+      console.log('Visit API response:', data);
+      animateCount(countEl, data.total || 0);
+      liveEl.textContent = data.active || 1;
+      noteEl.textContent = 'Live count · Cloudflare KV';
+    })
+    .catch(err => {
+      console.error('Visit API error:', err);
+      liveEl.textContent = '1';
+      noteEl.textContent = 'API error — check console';
+    });
 
-  // ── 2. Heartbeat every 20 s — keeps this tab counted as "active" ──
-  function heartbeat() {
+  // ── 2. Heartbeat every 25s ──
+  setInterval(() => {
     fetch(API + '/api/heartbeat?sid=' + sid, { method: 'POST' })
       .then(r => r.json())
       .then(data => {
         if (data.active != null) liveEl.textContent = data.active;
       })
       .catch(() => {});
-  }
-  setInterval(heartbeat, 20000);
+  }, 25000);
 
-  // ── 3. Also refresh active count every 30 s via /api/stats ──
-  setInterval(() => {
-    fetch(API + '/api/stats')
-      .then(r => r.json())
-      .then(data => {
-        if (data.active != null) liveEl.textContent = data.active;
-      })
-      .catch(() => {});
-  }, 30000);
+  // ── 3. Decrement on tab close ──
+  window.addEventListener('beforeunload', () => {
+    navigator.sendBeacon(API + '/api/leave?sid=' + sid);
+  });
 
   // ── 4. Animate counter rolling up ──
   function animateCount(el, target) {
+    if (!target) { el.textContent = '0'; return; }
     let c = Math.max(0, target - 60);
     const iv = setInterval(() => {
       c = Math.min(c + 2, target);
@@ -1046,17 +1046,7 @@ document.querySelectorAll('a[href^="#"]').forEach(a=>{a.addEventListener('click'
     }, 20);
   }
 
-  // ── 5. Fallback if Worker is unreachable ──
-  function fallback() {
-    let s = parseInt(localStorage.getItem('nb_totalvisits') || '0');
-    s++;
-    localStorage.setItem('nb_totalvisits', String(s));
-    animateCount(countEl, s);
-    noteEl.textContent = 'Local fallback (Worker unreachable)';
-    liveEl.textContent = '1';
-  }
-
-  // ── 6. Country flags ──
+  // ── 5. Country flags ──
   [{flag:'🇳🇵',name:'Nepal'},{flag:'🇮🇳',name:'India'},{flag:'🇺🇸',name:'USA'},
    {flag:'🇬🇧',name:'UK'},{flag:'🇦🇺',name:'Australia'},{flag:'🇨🇳',name:'China'}]
   .forEach(co => {
