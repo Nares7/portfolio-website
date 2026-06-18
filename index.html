@@ -992,16 +992,14 @@ document.querySelectorAll('a[href^="#"]').forEach(a=>{a.addEventListener('click'
   const liveEl    = document.getElementById('vlive-num');
   const countryEl = document.getElementById('vcountry');
 
-  if (!countEl || !noteEl || !liveEl) {
-    console.error('Visitor bar elements not found');
-    return;
-  }
+  if (!countEl || !noteEl || !liveEl) return;
 
-  // Show placeholder immediately so it never looks blank
-  countEl.textContent = '...';
-  liveEl.textContent  = '...';
+  // Show immediately so page never looks blank
+  const cachedTotal = localStorage.getItem('nb_last_total');
+  if (cachedTotal) countEl.textContent = parseInt(cachedTotal).toLocaleString();
+  else countEl.textContent = '...';
+  liveEl.textContent = '...';
 
-  // Same browser = same sid across refreshes (no double counting)
   let sid = localStorage.getItem('nb_sid');
   if (!sid) {
     sid = Date.now().toString(36) + Math.random().toString(36).slice(2, 9);
@@ -1009,42 +1007,41 @@ document.querySelectorAll('a[href^="#"]').forEach(a=>{a.addEventListener('click'
   }
 
   function setLive(n) {
-    liveEl.style.transition = 'opacity 0.3s';
     liveEl.style.opacity = '0';
     setTimeout(() => {
-      liveEl.textContent = n;
+      liveEl.textContent = Math.max(0, n);
       liveEl.style.opacity = '1';
-    }, 300);
+    }, 200);
   }
 
   function animateCount(target) {
-    if (!target && target !== 0) return;
-    let c = Math.max(0, target - 60);
+    if (isNaN(target)) return;
+    localStorage.setItem('nb_last_total', target);
+    let c = Math.max(0, target - 40);
     const iv = setInterval(() => {
-      c = Math.min(c + 2, target);
+      c = Math.min(c + 1, target);
       countEl.textContent = c.toLocaleString();
       if (c >= target) clearInterval(iv);
-    }, 20);
+    }, 25);
   }
 
   // ── 1. Register visit ──
   fetch(API + '/api/visit?sid=' + sid, { method: 'POST' })
-    .then(r => r.json())
+    .then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
     .then(data => {
       animateCount(data.total || 0);
       setLive(data.active ?? 1);
       noteEl.textContent = 'Live · Cloudflare KV';
     })
     .catch(() => {
-      // Fallback: at least show something from localStorage
-      let local = parseInt(localStorage.getItem('nb_count') || '0') + 1;
-      localStorage.setItem('nb_count', String(local));
-      animateCount(local);
-      setLive('—');
-      noteEl.textContent = 'Offline count';
+      // Show cached value if API fails
+      if (cachedTotal) countEl.textContent = parseInt(cachedTotal).toLocaleString();
+      else countEl.textContent = '—';
+      liveEl.textContent = '—';
+      noteEl.textContent = 'Could not reach API';
     });
 
-  // ── 2. Heartbeat every 25s — keep THIS session alive ──
+  // ── 2. Heartbeat every 25s — keep session alive ──
   setInterval(() => {
     fetch(API + '/api/heartbeat?sid=' + sid, { method: 'POST' })
       .then(r => r.json())
@@ -1052,18 +1049,22 @@ document.querySelectorAll('a[href^="#"]').forEach(a=>{a.addEventListener('click'
       .catch(() => {});
   }, 25000);
 
-  // ── 3. Poll every 10s — refresh active count for everyone ──
+  // ── 3. Poll /api/stats every 10s — real-time for all visitors ──
   setInterval(() => {
     fetch(API + '/api/stats')
       .then(r => r.json())
       .then(data => {
+        if (data.total  != null) {
+          localStorage.setItem('nb_last_total', data.total);
+          countEl.textContent = data.total.toLocaleString();
+        }
         if (data.active != null) setLive(data.active);
-        if (data.total  != null) countEl.textContent = data.total.toLocaleString();
+        noteEl.textContent = 'Live · Cloudflare KV';
       })
       .catch(() => {});
   }, 10000);
 
-  // ── 4. Remove session immediately on tab close ──
+  // ── 4. Remove session on tab close ──
   window.addEventListener('beforeunload', () => {
     navigator.sendBeacon(API + '/api/leave?sid=' + sid);
   });
