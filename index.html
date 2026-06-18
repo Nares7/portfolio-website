@@ -992,74 +992,83 @@ document.querySelectorAll('a[href^="#"]').forEach(a=>{a.addEventListener('click'
   const liveEl    = document.getElementById('vlive-num');
   const countryEl = document.getElementById('vcountry');
 
-  // localStorage sid = same browser never double-counts total
-  // but different devices/browsers each get unique sid
+  if (!countEl || !noteEl || !liveEl) {
+    console.error('Visitor bar elements not found');
+    return;
+  }
+
+  // Show placeholder immediately so it never looks blank
+  countEl.textContent = '...';
+  liveEl.textContent  = '...';
+
+  // Same browser = same sid across refreshes (no double counting)
   let sid = localStorage.getItem('nb_sid');
   if (!sid) {
     sid = Date.now().toString(36) + Math.random().toString(36).slice(2, 9);
     localStorage.setItem('nb_sid', sid);
   }
 
-  // ── 1. Register visit ──
-  fetch(API + '/api/visit?sid=' + sid, { method: 'POST' })
-    .then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
-    .then(data => {
-      animateCount(countEl, data.total || 0);
-      liveEl.textContent = data.active ?? 1;
-      noteEl.textContent = 'Live count · Cloudflare KV';
-    })
-    .catch(err => {
-      console.error('Visit API error:', err);
-      liveEl.textContent = '—';
-      noteEl.textContent = 'API error — check console';
-    });
+  function setLive(n) {
+    liveEl.style.transition = 'opacity 0.3s';
+    liveEl.style.opacity = '0';
+    setTimeout(() => {
+      liveEl.textContent = n;
+      liveEl.style.opacity = '1';
+    }, 300);
+  }
 
-  // ── 2. Heartbeat every 25s — keeps session alive in KV ──
-  setInterval(() => {
-    fetch(API + '/api/heartbeat?sid=' + sid, { method: 'POST' })
-      .then(r => r.json())
-      .then(data => {
-        if (data.active != null) liveEl.textContent = data.active;
-      })
-      .catch(() => {});
-  }, 25000);
-
-  // ── 3. Poll every 10s — real-time active count for everyone ──
-  setInterval(() => {
-    fetch(API + '/api/stats')
-      .then(r => r.json())
-      .then(data => {
-        if (data.active != null) {
-          liveEl.style.opacity = '0';
-          setTimeout(() => {
-            liveEl.textContent = data.active;
-            liveEl.style.opacity = '1';
-          }, 300);
-        }
-        if (data.total != null) {
-          countEl.textContent = data.total.toLocaleString();
-        }
-      })
-      .catch(() => {});
-  }, 10000);
-
-  // ── 4. Decrement immediately on tab close ──
-  window.addEventListener('beforeunload', () => {
-    navigator.sendBeacon(API + '/api/leave?sid=' + sid);
-  });
-
-  // ── 5. Animate total counter ──
-  function animateCount(el, target) {
-    if (!target) { el.textContent = '0'; return; }
+  function animateCount(target) {
+    if (!target && target !== 0) return;
     let c = Math.max(0, target - 60);
     const iv = setInterval(() => {
       c = Math.min(c + 2, target);
-      el.textContent = c.toLocaleString();
+      countEl.textContent = c.toLocaleString();
       if (c >= target) clearInterval(iv);
     }, 20);
   }
 
-  // ── 6. Country flags ──
+  // ── 1. Register visit ──
+  fetch(API + '/api/visit?sid=' + sid, { method: 'POST' })
+    .then(r => r.json())
+    .then(data => {
+      animateCount(data.total || 0);
+      setLive(data.active ?? 1);
+      noteEl.textContent = 'Live · Cloudflare KV';
+    })
+    .catch(() => {
+      // Fallback: at least show something from localStorage
+      let local = parseInt(localStorage.getItem('nb_count') || '0') + 1;
+      localStorage.setItem('nb_count', String(local));
+      animateCount(local);
+      setLive('—');
+      noteEl.textContent = 'Offline count';
+    });
+
+  // ── 2. Heartbeat every 25s — keep THIS session alive ──
+  setInterval(() => {
+    fetch(API + '/api/heartbeat?sid=' + sid, { method: 'POST' })
+      .then(r => r.json())
+      .then(data => { if (data.active != null) setLive(data.active); })
+      .catch(() => {});
+  }, 25000);
+
+  // ── 3. Poll every 10s — refresh active count for everyone ──
+  setInterval(() => {
+    fetch(API + '/api/stats')
+      .then(r => r.json())
+      .then(data => {
+        if (data.active != null) setLive(data.active);
+        if (data.total  != null) countEl.textContent = data.total.toLocaleString();
+      })
+      .catch(() => {});
+  }, 10000);
+
+  // ── 4. Remove session immediately on tab close ──
+  window.addEventListener('beforeunload', () => {
+    navigator.sendBeacon(API + '/api/leave?sid=' + sid);
+  });
+
+  // ── 5. Country flags ──
   [{flag:'🇳🇵',name:'Nepal'},{flag:'🇮🇳',name:'India'},{flag:'🇺🇸',name:'USA'},
    {flag:'🇬🇧',name:'UK'},{flag:'🇦🇺',name:'Australia'},{flag:'🇨🇳',name:'China'}]
   .forEach(co => {
