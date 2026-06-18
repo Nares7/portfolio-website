@@ -993,23 +993,13 @@ document.querySelectorAll('a[href^="#"]').forEach(a=>{a.addEventListener('click'
     <div class="vbar-block">
       <div class="vlabel">Today</div>
       <div class="vcount-sm"><span id="vtoday">—</span><small>visits today</small></div>
-      <div class="vnote">Resets at midnight</div>
-    </div>
-
-    <div class="vdivider"></div>
-
-    <!-- Your location -->
-    <div class="vbar-block">
-      <div class="vlabel">Your Location</div>
-      <div id="vyourloc" style="font-size:.82rem;font-weight:700;color:var(--navy)">Detecting...</div>
-      <div class="vnote">Visitor origin via Cloudflare</div>
     </div>
 
     <div class="vdivider"></div>
 
     <!-- Viewing now -->
     <div class="vbar-block">
-      <div class="vlive">● <span id="vlive-num">—</span> viewing now</div>
+      <div class="vlive">● <span id="vlive-num">—</span> views</div>
       <div class="vnote">Updates every 10s</div>
     </div>
 
@@ -1083,7 +1073,6 @@ document.addEventListener('DOMContentLoaded', () => {
       animateTotal(data.total || 0);
       setLive(data.active || 1);
       if (data.today != null) todayEl.textContent = data.today.toLocaleString();
-      noteEl.textContent = 'Live · Cloudflare KV';
 
       // Show visitor's own country
       if (data.country) {
@@ -1100,7 +1089,6 @@ document.addEventListener('DOMContentLoaded', () => {
       liveEl.textContent  = '—';
       todayEl.textContent = '—';
       youlocEl.textContent = '—';
-      noteEl.textContent  = 'Could not reach API';
     });
 
   // ── 2. Heartbeat every 25s ──
