@@ -988,20 +988,69 @@ document.querySelectorAll('a[href^="#"]').forEach(a=>{a.addEventListener('click'
 
 <script>
 (()=>{
-  const countEl=document.getElementById('vcount');
-  const noteEl=document.getElementById('vnote');
-  const liveEl=document.getElementById('vlive-num');
-  const countryEl=document.getElementById('vcountry');
-  fetch('https://api.countapi.xyz/hit/nareshbhatta-portfolio/pageviews')
-    .then(r=>r.json())
-    .then(data=>{
-      if(data&&data.value){const target=data.value;let c=Math.max(0,target-40);const iv=setInterval(()=>{c=Math.min(c+2,target);countEl.textContent=c.toLocaleString();if(c>=target)clearInterval(iv);},20);noteEl.textContent='Real-time count via countapi.xyz';}
-      else fallback();
-    }).catch(()=>fallback());
-  function fallback(){let s=parseInt(localStorage.getItem('nb_totalvisits')||'0');s++;localStorage.setItem('nb_totalvisits',String(s));let c=Math.max(0,s-20);const iv=setInterval(()=>{c=Math.min(c+1,s);countEl.textContent=c.toLocaleString();if(c>=s)clearInterval(iv);},25);noteEl.textContent='Persisted across your sessions (API unavailable)';}
-  function updateLive(){liveEl.textContent=1+Math.floor(Math.random()*5);}
-  updateLive();setInterval(updateLive,15000);
-  [{flag:'🇳🇵',name:'Nepal'},{flag:'🇮🇳',name:'India'},{flag:'🇺🇸',name:'USA'},{flag:'🇬🇧',name:'UK'},{flag:'🇦🇺',name:'Australia'},{flag:'🇨🇳',name:'China'}].forEach(co=>{const d=document.createElement('span');d.className='vcf';d.textContent=co.flag+' '+co.name;countryEl.appendChild(d);});
+  const API = 'https://api.nareshbhatta7.com.np';
+  const countEl  = document.getElementById('vcount');
+  const noteEl   = document.getElementById('vnote');
+  const liveEl   = document.getElementById('vlive-num');
+  const countryEl= document.getElementById('vcountry');
+
+  // ── 1. Hit /api/visit → records this visit, returns total + active ──
+  fetch(API + '/api/visit', { method: 'POST' })
+    .then(r => r.json())
+    .then(data => {
+      // data = { total: 1234, active: 5, country: "NP" }
+      if (data && data.total) {
+        animateCount(countEl, data.total);
+        noteEl.textContent = 'Real-time count via Cloudflare KV';
+      } else {
+        fallback();
+      }
+      if (data && data.active) {
+        liveEl.textContent = data.active;
+      }
+    })
+    .catch(() => fallback());
+
+  // ── 2. Poll /api/stats every 30 s for live active count ──
+  function pollActive() {
+    fetch(API + '/api/stats')
+      .then(r => r.json())
+      .then(data => {
+        if (data && data.active) liveEl.textContent = data.active;
+      })
+      .catch(() => {});
+  }
+  setInterval(pollActive, 30000);
+
+  // ── 3. Animate the counter rolling up ──
+  function animateCount(el, target) {
+    let c = Math.max(0, target - 60);
+    const iv = setInterval(() => {
+      c = Math.min(c + 2, target);
+      el.textContent = c.toLocaleString();
+      if (c >= target) clearInterval(iv);
+    }, 20);
+  }
+
+  // ── 4. Fallback if Worker is unreachable ──
+  function fallback() {
+    let s = parseInt(localStorage.getItem('nb_totalvisits') || '0');
+    s++;
+    localStorage.setItem('nb_totalvisits', String(s));
+    animateCount(countEl, s);
+    noteEl.textContent = 'Local fallback (Worker unreachable)';
+    liveEl.textContent = '—';
+  }
+
+  // ── 5. Country flags (static display) ──
+  [{flag:'🇳🇵',name:'Nepal'},{flag:'🇮🇳',name:'India'},{flag:'🇺🇸',name:'USA'},
+   {flag:'🇬🇧',name:'UK'},{flag:'🇦🇺',name:'Australia'},{flag:'🇨🇳',name:'China'}]
+  .forEach(co => {
+    const d = document.createElement('span');
+    d.className = 'vcf';
+    d.textContent = co.flag + ' ' + co.name;
+    countryEl.appendChild(d);
+  });
 })();
 </script>
 
