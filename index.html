@@ -958,6 +958,9 @@ document.querySelectorAll('a[href^="#"]').forEach(a=>{a.addEventListener('click'
 <!-- ══════════════════════════════════════════════
      VISITOR BAR
 ══════════════════════════════════════════════ -->
+<!-- ══════════════════════════════════════════════
+     VISITOR BAR
+══════════════════════════════════════════════ -->
 <style>
 .vbar{background:var(--bg);padding:12px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
 .vbar-inner{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;width:100%;padding:0 5vw}
@@ -976,32 +979,30 @@ document.querySelectorAll('a[href^="#"]').forEach(a=>{a.addEventListener('click'
     <div>
       <div class="vlabel">Website Visitors</div>
       <div class="vcount"><span id="vcount">—</span><small>total visits</small></div>
+      <div class="vnote" id="vnote">Loading...</div>
     </div>
     <div class="vcountry" id="vcountry"></div>
     <div>
-      <div class="vlive" id="vlive">● <span id="vlive-num">—</span> viewing now</div>
+      <div class="vlive">● <span id="vlive-num">—</span> viewing now</div>
+      <div class="vnote">Updates every 10s</div>
     </div>
   </div>
 </div>
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-  const API = 'https://api.nareshbhatta7.com.np';
-  const countEl   = document.getElementById('vcount');
-  const noteEl    = document.getElementById('vnote');
-  const liveEl    = document.getElementById('vlive-num');
-  const countryEl = document.getElementById('vcountry');
+  const API      = 'https://api.nareshbhatta7.com.np';
+  const countEl  = document.getElementById('vcount');
+  const noteEl   = document.getElementById('vnote');
+  const liveEl   = document.getElementById('vlive-num');
+  const countryEl= document.getElementById('vcountry');
 
-  if (!countEl || !noteEl || !liveEl) {
-    console.error('Visitor bar elements not found:', {countEl, noteEl, liveEl});
-    return;
-  }
+  // Show cached total immediately — never blank on load
+  const cached = localStorage.getItem('nb_last_total');
+  countEl.textContent = cached ? parseInt(cached).toLocaleString() : '...';
+  liveEl.textContent  = '...';
 
-  const cachedTotal = localStorage.getItem('nb_last_total');
-  if (cachedTotal) countEl.textContent = parseInt(cachedTotal).toLocaleString();
-  else countEl.textContent = '...';
-  liveEl.textContent = '...';
-
+  // Same sid = same browser never double-counts total
   let sid = localStorage.getItem('nb_sid');
   if (!sid) {
     sid = Date.now().toString(36) + Math.random().toString(36).slice(2, 9);
@@ -1011,13 +1012,19 @@ document.addEventListener('DOMContentLoaded', () => {
   function setLive(n) {
     liveEl.style.opacity = '0';
     setTimeout(() => {
-      liveEl.textContent = Math.max(0, n);
+      liveEl.textContent = Math.max(1, parseInt(n) || 1);
       liveEl.style.opacity = '1';
     }, 200);
   }
 
-  function animateCount(target) {
-    if (isNaN(target)) return;
+  function setTotal(n) {
+    if (!n && n !== 0) return;
+    localStorage.setItem('nb_last_total', n);
+    countEl.textContent = parseInt(n).toLocaleString();
+  }
+
+  function animateTotal(target) {
+    if (!target) return;
     localStorage.setItem('nb_last_total', target);
     let c = Math.max(0, target - 40);
     const iv = setInterval(() => {
@@ -1027,22 +1034,23 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 25);
   }
 
-  // ── 1. Register visit ──
+  // ── 1. Register visit on page load ──
   fetch(API + '/api/visit?sid=' + sid, { method: 'POST' })
     .then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
     .then(data => {
-      animateCount(data.total || 0);
-      setLive(data.active ?? 1);
+      animateTotal(data.total || 0);
+      setLive(data.active || 1);
       noteEl.textContent = 'Live · Cloudflare KV';
     })
-    .catch(() => {
-      if (cachedTotal) countEl.textContent = parseInt(cachedTotal).toLocaleString();
+    .catch(err => {
+      console.error('API error:', err);
+      if (cached) countEl.textContent = parseInt(cached).toLocaleString();
       else countEl.textContent = '—';
       liveEl.textContent = '—';
       noteEl.textContent = 'Could not reach API';
     });
 
-  // ── 2. Heartbeat every 25s ──
+  // ── 2. Heartbeat every 25s — keeps THIS tab alive in KV ──
   setInterval(() => {
     fetch(API + '/api/heartbeat?sid=' + sid, { method: 'POST' })
       .then(r => r.json())
@@ -1050,22 +1058,19 @@ document.addEventListener('DOMContentLoaded', () => {
       .catch(() => {});
   }, 25000);
 
-  // ── 3. Poll every 10s ──
+  // ── 3. Poll every 10s — real-time count for all viewers ──
   setInterval(() => {
     fetch(API + '/api/stats')
       .then(r => r.json())
       .then(data => {
-        if (data.total  != null) {
-          localStorage.setItem('nb_last_total', data.total);
-          countEl.textContent = data.total.toLocaleString();
-        }
+        if (data.total  != null) setTotal(data.total);
         if (data.active != null) setLive(data.active);
         noteEl.textContent = 'Live · Cloudflare KV';
       })
       .catch(() => {});
   }, 10000);
 
-  // ── 4. Remove session on tab close ──
+  // ── 4. Decrement immediately when tab closes ──
   window.addEventListener('beforeunload', () => {
     navigator.sendBeacon(API + '/api/leave?sid=' + sid);
   });
