@@ -992,33 +992,28 @@ document.querySelectorAll('a[href^="#"]').forEach(a=>{a.addEventListener('click'
   const liveEl    = document.getElementById('vlive-num');
   const countryEl = document.getElementById('vcountry');
 
-  // Use localStorage for sid so same browser doesn't count multiple times
-  // but different browsers/devices each get their own
+  // Same browser = same sid (so refresh doesn't double-count total)
   let sid = localStorage.getItem('nb_sid');
   if (!sid) {
     sid = Date.now().toString(36) + Math.random().toString(36).slice(2, 9);
     localStorage.setItem('nb_sid', sid);
   }
 
-  // ── 1. Register visit ──
+  // ── 1. Register visit on page load ──
   fetch(API + '/api/visit?sid=' + sid, { method: 'POST' })
-    .then(r => {
-      if (!r.ok) throw new Error('HTTP ' + r.status);
-      return r.json();
-    })
+    .then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
     .then(data => {
-      console.log('Visit API response:', data);
       animateCount(countEl, data.total || 0);
-      liveEl.textContent = data.active || 1;
+      liveEl.textContent = data.active ?? '—';
       noteEl.textContent = 'Live count · Cloudflare KV';
     })
     .catch(err => {
       console.error('Visit API error:', err);
-      liveEl.textContent = '1';
-      noteEl.textContent = 'API error — check console';
+      liveEl.textContent = '—';
+      noteEl.textContent = 'API error';
     });
 
-  // ── 2. Heartbeat every 25s ──
+  // ── 2. Heartbeat every 25s — keeps THIS tab registered as active ──
   setInterval(() => {
     fetch(API + '/api/heartbeat?sid=' + sid, { method: 'POST' })
       .then(r => r.json())
@@ -1028,12 +1023,34 @@ document.querySelectorAll('a[href^="#"]').forEach(a=>{a.addEventListener('click'
       .catch(() => {});
   }, 25000);
 
-  // ── 3. Decrement on tab close ──
+  // ── 3. Poll /api/stats every 10s — updates active count in real time ──
+  setInterval(() => {
+    fetch(API + '/api/stats')
+      .then(r => r.json())
+      .then(data => {
+        if (data.active != null) {
+          // Smooth number change with a quick flash
+          liveEl.style.transition = 'opacity 0.3s';
+          liveEl.style.opacity = '0';
+          setTimeout(() => {
+            liveEl.textContent = data.active;
+            liveEl.style.opacity = '1';
+          }, 300);
+        }
+        if (data.total != null) {
+          countEl.textContent = data.total.toLocaleString();
+          noteEl.textContent = 'Live count · Cloudflare KV';
+        }
+      })
+      .catch(() => {});
+  }, 10000);
+
+  // ── 4. Decrement when tab closes ──
   window.addEventListener('beforeunload', () => {
     navigator.sendBeacon(API + '/api/leave?sid=' + sid);
   });
 
-  // ── 4. Animate counter rolling up ──
+  // ── 5. Animate total counter rolling up ──
   function animateCount(el, target) {
     if (!target) { el.textContent = '0'; return; }
     let c = Math.max(0, target - 60);
@@ -1044,7 +1061,7 @@ document.querySelectorAll('a[href^="#"]').forEach(a=>{a.addEventListener('click'
     }, 20);
   }
 
-  // ── 5. Country flags ──
+  // ── 6. Country flags ──
   [{flag:'🇳🇵',name:'Nepal'},{flag:'🇮🇳',name:'India'},{flag:'🇺🇸',name:'USA'},
    {flag:'🇬🇧',name:'UK'},{flag:'🇦🇺',name:'Australia'},{flag:'🇨🇳',name:'China'}]
   .forEach(co => {
