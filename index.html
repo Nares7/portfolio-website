@@ -959,56 +959,83 @@ document.querySelectorAll('a[href^="#"]').forEach(a=>{a.addEventListener('click'
      VISITOR BAR
 ══════════════════════════════════════════════ -->
 <style>
-.vbar{background:var(--bg);padding:12px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
-.vbar-inner{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;width:100%;padding:0 5vw}
-.vlabel{font-size:.67rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--muted)}
+.vbar{background:var(--bg);padding:14px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.vbar-inner{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;width:100%;padding:0 5vw}
+.vbar-block{display:flex;flex-direction:column;gap:2px}
+.vlabel{font-size:.63rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--muted)}
 .vcount{font-family:var(--serif);font-size:1.4rem;color:var(--navy);font-weight:700;display:flex;align-items:baseline;gap:6px}
 .vcount small{font-size:.74rem;color:var(--muted);font-family:var(--sans);font-weight:500}
-.vcountry{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
-.vcf{font-size:.78rem;color:var(--slate)}
-.vlive{display:flex;align-items:center;gap:6px;font-size:.7rem;color:#16A34A;font-weight:700}
+.vcount-sm{font-family:var(--serif);font-size:1.1rem;color:var(--navy);font-weight:700;display:flex;align-items:baseline;gap:5px}
+.vcount-sm small{font-size:.7rem;color:var(--muted);font-family:var(--sans);font-weight:500}
+.vcountry{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.vcf{font-size:.75rem;color:var(--slate);background:var(--white);border:1px solid var(--border);border-radius:6px;padding:2px 7px}
+.vcf.you{border-color:var(--teal);color:var(--teal);font-weight:700}
+.vlive{display:flex;align-items:center;gap:6px;font-size:.75rem;color:#16A34A;font-weight:700}
 .vlive::before{content:'';width:6px;height:6px;border-radius:50%;background:#16A34A;animation:pulse 1.5s infinite}
-.vnote{font-size:.63rem;color:var(--muted);font-style:italic}
+.vnote{font-size:.61rem;color:var(--muted);font-style:italic;margin-top:1px}
+.vdivider{width:1px;height:36px;background:var(--border);flex-shrink:0}
+@media(max-width:768px){.vdivider{display:none}.vbar-inner{gap:12px}}
 </style>
 
 <div class="vbar">
   <div class="vbar-inner">
-    <div>
-      <div class="vlabel">Website Visitors</div>
-      <div class="vcount"><span id="vcount">—</span><small>total visits</small></div>
+
+    <!-- Total visits -->
+    <div class="vbar-block">
+      <div class="vlabel">Total Visitors</div>
+      <div class="vcount"><span id="vcount">—</span><small>all time</small></div>
       <div class="vnote" id="vnote">Loading...</div>
     </div>
-    <div class="vcountry" id="vcountry"></div>
-    <div>
+
+    <div class="vdivider"></div>
+
+    <!-- Today's visits -->
+    <div class="vbar-block">
+      <div class="vlabel">Today</div>
+      <div class="vcount-sm"><span id="vtoday">—</span><small>visits today</small></div>
+      <div class="vnote">Resets at midnight</div>
+    </div>
+
+    <div class="vdivider"></div>
+
+    <!-- Your location -->
+    <div class="vbar-block">
+      <div class="vlabel">Your Location</div>
+      <div id="vyourloc" style="font-size:.82rem;font-weight:700;color:var(--navy)">Detecting...</div>
+      <div class="vnote">Visitor origin via Cloudflare</div>
+    </div>
+
+    <div class="vdivider"></div>
+
+    <!-- Viewing now -->
+    <div class="vbar-block">
       <div class="vlive">● <span id="vlive-num">—</span> viewing now</div>
       <div class="vnote">Updates every 10s</div>
     </div>
+
   </div>
 </div>
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-  const API      = 'https://api.nareshbhatta7.com.np';
-  const countEl  = document.getElementById('vcount');
-  const noteEl   = document.getElementById('vnote');
-  const liveEl   = document.getElementById('vlive-num');
-  const countryEl= document.getElementById('vcountry');
+  const API       = 'https://api.nareshbhatta7.com.np';
+  const countEl   = document.getElementById('vcount');
+  const todayEl   = document.getElementById('vtoday');
+  const noteEl    = document.getElementById('vnote');
+  const liveEl    = document.getElementById('vlive-num');
+  const youlocEl  = document.getElementById('vyourloc');
 
-  // Show cached total immediately — never blank
   const cached = localStorage.getItem('nb_last_total');
   countEl.textContent = cached ? parseInt(cached).toLocaleString() : '...';
   liveEl.textContent  = '...';
+  todayEl.textContent = '...';
 
-  // BROWSER sid — stored in localStorage, permanent per browser
-  // Used only for counting unique total visits
   let browserSid = localStorage.getItem('nb_browser_sid');
   if (!browserSid) {
     browserSid = 'b_' + Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
     localStorage.setItem('nb_browser_sid', browserSid);
   }
 
-  // TAB sid — stored in sessionStorage, unique per tab, gone when tab closes
-  // Used for counting currently active viewers
   let tabSid = sessionStorage.getItem('nb_tab_sid');
   if (!tabSid) {
     tabSid = 't_' + Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
@@ -1040,24 +1067,43 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 25);
   }
 
-  // ── 1. Register visit — send BOTH sids ──
-  // browserSid tracks unique visits, tabSid tracks active tabs
+  // Country code to flag emoji + name
+  const countryMap = {
+    NP:'🇳🇵 Nepal', IN:'🇮🇳 India', US:'🇺🇸 USA', GB:'🇬🇧 UK',
+    AU:'🇦🇺 Australia', CN:'🇨🇳 China', DE:'🇩🇪 Germany',
+    CA:'🇨🇦 Canada', JP:'🇯🇵 Japan', KR:'🇰🇷 South Korea',
+    SG:'🇸🇬 Singapore', AE:'🇦🇪 UAE', NL:'🇳🇱 Netherlands',
+    FR:'🇫🇷 France', SE:'🇸🇪 Sweden', CH:'🇨🇭 Switzerland',
+  };
+
+  // ── 1. Register visit ──
   fetch(API + '/api/visit?sid=' + browserSid + '&tabsid=' + tabSid, { method: 'POST' })
     .then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
     .then(data => {
       animateTotal(data.total || 0);
       setLive(data.active || 1);
+      if (data.today != null) todayEl.textContent = data.today.toLocaleString();
       noteEl.textContent = 'Live · Cloudflare KV';
+
+      // Show visitor's own country
+      if (data.country) {
+        const label = countryMap[data.country] || ('🌐 ' + data.country);
+        youlocEl.textContent = label;
+      } else {
+        youlocEl.textContent = '🌐 Unknown';
+      }
     })
     .catch(err => {
       console.error('API error:', err);
       if (cached) countEl.textContent = parseInt(cached).toLocaleString();
       else countEl.textContent = '—';
-      liveEl.textContent = '—';
-      noteEl.textContent = 'Could not reach API';
+      liveEl.textContent  = '—';
+      todayEl.textContent = '—';
+      youlocEl.textContent = '—';
+      noteEl.textContent  = 'Could not reach API';
     });
 
-  // ── 2. Heartbeat every 25s — keeps THIS tab alive ──
+  // ── 2. Heartbeat every 25s ──
   setInterval(() => {
     fetch(API + '/api/heartbeat?sid=' + tabSid, { method: 'POST' })
       .then(r => r.json())
@@ -1065,35 +1111,25 @@ document.addEventListener('DOMContentLoaded', () => {
       .catch(() => {});
   }, 25000);
 
-  // ── 3. Poll every 10s — refresh both counts ──
+  // ── 3. Poll every 10s ──
   setInterval(() => {
     fetch(API + '/api/stats')
       .then(r => r.json())
       .then(data => {
         if (data.total  != null) setTotal(data.total);
         if (data.active != null) setLive(data.active);
+        if (data.today  != null) todayEl.textContent = data.today.toLocaleString();
         noteEl.textContent = 'Live · Cloudflare KV';
       })
       .catch(() => {});
   }, 10000);
 
-  // ── 4. Remove THIS tab from active on close ──
+  // ── 4. Leave ──
   window.addEventListener('beforeunload', () => {
     navigator.sendBeacon(API + '/api/leave?sid=' + tabSid);
   });
-
-  // ── 5. Country flags ──
-  [{flag:'🇳🇵',name:'Nepal'},{flag:'🇮🇳',name:'India'},{flag:'🇺🇸',name:'USA'},
-   {flag:'🇬🇧',name:'UK'},{flag:'🇦🇺',name:'Australia'},{flag:'🇨🇳',name:'China'}]
-  .forEach(co => {
-    const d = document.createElement('span');
-    d.className = 'vcf';
-    d.textContent = co.flag + ' ' + co.name;
-    countryEl.appendChild(d);
-  });
 });
 </script>
-
 <!-- ══════════════════════════════════════════════
      FOOTER
 ══════════════════════════════════════════════ -->
