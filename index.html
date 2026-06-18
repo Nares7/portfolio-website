@@ -1107,7 +1107,6 @@ document.addEventListener('DOMContentLoaded', () => {
         if (data.total  != null) setTotal(data.total);
         if (data.active != null) setLive(data.active);
         if (data.today  != null) todayEl.textContent = data.today.toLocaleString();
-        noteEl.textContent = 'Live · Cloudflare KV';
       })
       .catch(() => {});
   }, 10000);
@@ -1118,6 +1117,8 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 </script>
+
+     
 <!-- ══════════════════════════════════════════════
      FOOTER
 ══════════════════════════════════════════════ -->
