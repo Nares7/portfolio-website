@@ -985,16 +985,18 @@ document.querySelectorAll('a[href^="#"]').forEach(a=>{a.addEventListener('click'
 </div>
 
 <script>
-(()=>{
+document.addEventListener('DOMContentLoaded', () => {
   const API = 'https://api.nareshbhatta7.com.np';
   const countEl   = document.getElementById('vcount');
   const noteEl    = document.getElementById('vnote');
   const liveEl    = document.getElementById('vlive-num');
   const countryEl = document.getElementById('vcountry');
 
-  if (!countEl || !noteEl || !liveEl) return;
+  if (!countEl || !noteEl || !liveEl) {
+    console.error('Visitor bar elements not found:', {countEl, noteEl, liveEl});
+    return;
+  }
 
-  // Show immediately so page never looks blank
   const cachedTotal = localStorage.getItem('nb_last_total');
   if (cachedTotal) countEl.textContent = parseInt(cachedTotal).toLocaleString();
   else countEl.textContent = '...';
@@ -1034,14 +1036,13 @@ document.querySelectorAll('a[href^="#"]').forEach(a=>{a.addEventListener('click'
       noteEl.textContent = 'Live · Cloudflare KV';
     })
     .catch(() => {
-      // Show cached value if API fails
       if (cachedTotal) countEl.textContent = parseInt(cachedTotal).toLocaleString();
       else countEl.textContent = '—';
       liveEl.textContent = '—';
       noteEl.textContent = 'Could not reach API';
     });
 
-  // ── 2. Heartbeat every 25s — keep session alive ──
+  // ── 2. Heartbeat every 25s ──
   setInterval(() => {
     fetch(API + '/api/heartbeat?sid=' + sid, { method: 'POST' })
       .then(r => r.json())
@@ -1049,7 +1050,7 @@ document.querySelectorAll('a[href^="#"]').forEach(a=>{a.addEventListener('click'
       .catch(() => {});
   }, 25000);
 
-  // ── 3. Poll /api/stats every 10s — real-time for all visitors ──
+  // ── 3. Poll every 10s ──
   setInterval(() => {
     fetch(API + '/api/stats')
       .then(r => r.json())
@@ -1078,7 +1079,7 @@ document.querySelectorAll('a[href^="#"]').forEach(a=>{a.addEventListener('click'
     d.textContent = co.flag + ' ' + co.name;
     countryEl.appendChild(d);
   });
-})();
+});
 </script>
 
 
