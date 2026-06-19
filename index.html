@@ -954,7 +954,6 @@ document.querySelectorAll('a[href^="#"]').forEach(a=>{a.addEventListener('click'
 })();
 </script>
 
-
 <!-- ══════════════════════════════════════════════
      VISITOR BAR
 ══════════════════════════════════════════════ -->
@@ -1009,8 +1008,10 @@ document.addEventListener('DOMContentLoaded', () => {
   const API       = 'https://api.nareshbhatta7.com.np';
   const countEl   = document.getElementById('vcount');
   const todayEl   = document.getElementById('vtoday');
-  const noteEl    = document.getElementById('vnote');
   const liveEl    = document.getElementById('vlive-num');
+  // These two elements aren't present in the current markup —
+  // guarded everywhere below so they never crash the script.
+  const noteEl    = document.getElementById('vnote');
   const youlocEl  = document.getElementById('vyourloc');
 
   const cached = localStorage.getItem('nb_last_total');
@@ -1072,12 +1073,14 @@ document.addEventListener('DOMContentLoaded', () => {
       setLive(data.active || 1);
       if (data.today != null) todayEl.textContent = data.today.toLocaleString();
 
-      // Show visitor's own country
-      if (data.country) {
-        const label = countryMap[data.country] || ('🌐 ' + data.country);
-        youlocEl.textContent = label;
-      } else {
-        youlocEl.textContent = '🌐 Unknown';
+      // Show visitor's own country (only if the element exists)
+      if (youlocEl) {
+        if (data.country) {
+          const label = countryMap[data.country] || ('🌐 ' + data.country);
+          youlocEl.textContent = label;
+        } else {
+          youlocEl.textContent = '🌐 Unknown';
+        }
       }
     })
     .catch(err => {
@@ -1086,7 +1089,7 @@ document.addEventListener('DOMContentLoaded', () => {
       else countEl.textContent = '—';
       liveEl.textContent  = '—';
       todayEl.textContent = '—';
-      youlocEl.textContent = '—';
+      if (youlocEl) youlocEl.textContent = '—';
     });
 
   // ── 2. Heartbeat every 25s ──
@@ -1115,7 +1118,6 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 </script>
-
      
 <!-- ══════════════════════════════════════════════
      FOOTER
