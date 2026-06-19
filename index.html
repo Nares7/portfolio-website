@@ -1009,8 +1009,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const countEl   = document.getElementById('vcount');
   const todayEl   = document.getElementById('vtoday');
   const liveEl    = document.getElementById('vlive-num');
-  // These two elements aren't present in the current markup —
-  // guarded everywhere below so they never crash the script.
   const noteEl    = document.getElementById('vnote');
   const youlocEl  = document.getElementById('vyourloc');
 
@@ -1056,13 +1054,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 25);
   }
 
-  // Country code to flag emoji + name
   const countryMap = {
-    NP:'🇳🇵 Nepal', IN:'🇮🇳 India', US:'🇺🇸 USA', GB:'🇬🇧 UK',
-    AU:'🇦🇺 Australia', CN:'🇨🇳 China', DE:'🇩🇪 Germany',
-    CA:'🇨🇦 Canada', JP:'🇯🇵 Japan', KR:'🇰🇷 South Korea',
-    SG:'🇸🇬 Singapore', AE:'🇦🇪 UAE', NL:'🇳🇱 Netherlands',
-    FR:'🇫🇷 France', SE:'🇸🇪 Sweden', CH:'🇨🇭 Switzerland',
+    NP:'🇳🇵 Nepal',
   };
 
   // ── 1. Register visit ──
@@ -1073,7 +1066,6 @@ document.addEventListener('DOMContentLoaded', () => {
       setLive(data.active || 1);
       if (data.today != null) todayEl.textContent = data.today.toLocaleString();
 
-      // Show visitor's own country (only if the element exists)
       if (youlocEl) {
         if (data.country) {
           const label = countryMap[data.country] || ('🌐 ' + data.country);
@@ -1118,6 +1110,8 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 </script>
+
+     
      
 <!-- ══════════════════════════════════════════════
      FOOTER
