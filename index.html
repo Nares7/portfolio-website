@@ -973,6 +973,7 @@ document.querySelectorAll('a[href^="#"]').forEach(a=>{a.addEventListener('click'
 .vlive::before{content:'';width:6px;height:6px;border-radius:50%;background:#16A34A;animation:pulse 1.5s infinite}
 .vnote{font-size:.61rem;color:var(--muted);font-style:italic;margin-top:1px}
 .vdivider{width:1px;height:36px;background:var(--border);flex-shrink:0}
+#vcount,#vtoday,#vlive-num{transition:opacity .25s ease}
 @media(max-width:768px){.vdivider{display:none}.vbar-inner{gap:12px}}
 </style>
 
@@ -1029,18 +1030,29 @@ document.addEventListener('DOMContentLoaded', () => {
     sessionStorage.setItem('nb_tab_sid', tabSid);
   }
 
-  function setLive(n) {
-    liveEl.style.opacity = '0';
+  // Fades an element out, swaps its text, fades it back in — used for every live update
+  function flash(el, text) {
+    if (el.textContent === String(text)) return; // no change, no blink
+    el.style.opacity = '0';
     setTimeout(() => {
-      liveEl.textContent = Math.max(0, parseInt(n) || 0);
-      liveEl.style.opacity = '1';
-    }, 200);
+      el.textContent = text;
+      el.style.opacity = '1';
+    }, 220);
+  }
+
+  function setLive(n) {
+    flash(liveEl, Math.max(0, parseInt(n) || 0));
   }
 
   function setTotal(n) {
     if (n == null) return;
     localStorage.setItem('nb_last_total', n);
-    countEl.textContent = parseInt(n).toLocaleString();
+    flash(countEl, parseInt(n).toLocaleString());
+  }
+
+  function setToday(n) {
+    if (n == null) return;
+    flash(todayEl, parseInt(n).toLocaleString());
   }
 
   function animateTotal(target) {
@@ -1055,7 +1067,11 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   const countryMap = {
-    NP:'🇳🇵 Nepal',
+    NP:'🇳🇵 Nepal', IN:'🇮🇳 India', US:'🇺🇸 USA', GB:'🇬🇧 UK',
+    AU:'🇦🇺 Australia', CN:'🇨🇳 China', DE:'🇩🇪 Germany',
+    CA:'🇨🇦 Canada', JP:'🇯🇵 Japan', KR:'🇰🇷 South Korea',
+    SG:'🇸🇬 Singapore', AE:'🇦🇪 UAE', NL:'🇳🇱 Netherlands',
+    FR:'🇫🇷 France', SE:'🇸🇪 Sweden', CH:'🇨🇭 Switzerland',
   };
 
   // ── 1. Register visit ──
@@ -1092,14 +1108,14 @@ document.addEventListener('DOMContentLoaded', () => {
       .catch(() => {});
   }, 25000);
 
-  // ── 3. Poll every 10s ──
+  // ── 3. Poll every 10s — values blink as they refresh ──
   setInterval(() => {
     fetch(API + '/api/stats')
       .then(r => r.json())
       .then(data => {
         if (data.total  != null) setTotal(data.total);
         if (data.active != null) setLive(data.active);
-        if (data.today  != null) todayEl.textContent = data.today.toLocaleString();
+        if (data.today  != null) setToday(data.today);
       })
       .catch(() => {});
   }, 10000);
@@ -1110,6 +1126,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 </script>
+
 
      
      
