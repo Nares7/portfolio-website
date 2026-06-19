@@ -1030,9 +1030,8 @@ document.addEventListener('DOMContentLoaded', () => {
     sessionStorage.setItem('nb_tab_sid', tabSid);
   }
 
-  // Fades an element out, swaps its text, fades it back in — used for every live update
   function flash(el, text) {
-    if (el.textContent === String(text)) return; // no change, no blink
+    if (el.textContent === String(text)) return;
     el.style.opacity = '0';
     setTimeout(() => {
       el.textContent = text;
@@ -1040,20 +1039,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 220);
   }
 
-  function setLive(n) {
-    flash(liveEl, Math.max(0, parseInt(n) || 0));
-  }
-
-  function setTotal(n) {
-    if (n == null) return;
-    localStorage.setItem('nb_last_total', n);
-    flash(countEl, parseInt(n).toLocaleString());
-  }
-
-  function setToday(n) {
-    if (n == null) return;
-    flash(todayEl, parseInt(n).toLocaleString());
-  }
+  function setLive(n)  { flash(liveEl, Math.max(0, parseInt(n) || 0)); }
+  function setTotal(n) { if (n == null) return; localStorage.setItem('nb_last_total', n); flash(countEl, parseInt(n).toLocaleString()); }
+  function setToday(n) { if (n == null) return; flash(todayEl, parseInt(n).toLocaleString()); }
 
   function animateTotal(target) {
     if (!target) return;
@@ -1075,7 +1063,7 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   // ── 1. Register visit ──
-  fetch(API + '/api/visit?sid=' + browserSid + '&tabsid=' + tabSid, { method: 'POST' })
+  fetch(API + '/api/visit?sid=' + browserSid + '&tabsid=' + tabSid, { method: 'POST', cache: 'no-store' })
     .then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
     .then(data => {
       animateTotal(data.total || 0);
@@ -1102,15 +1090,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // ── 2. Heartbeat every 25s ──
   setInterval(() => {
-    fetch(API + '/api/heartbeat?sid=' + tabSid, { method: 'POST' })
+    fetch(API + '/api/heartbeat?sid=' + tabSid, { method: 'POST', cache: 'no-store' })
       .then(r => r.json())
       .then(data => { if (data.active != null) setLive(data.active); })
       .catch(() => {});
   }, 25000);
 
-  // ── 3. Poll every 10s — values blink as they refresh ──
+  // ── 3. Poll every 10s — fresh fetch every time, no caching ──
   setInterval(() => {
-    fetch(API + '/api/stats')
+    fetch(API + '/api/stats', { cache: 'no-store' })
       .then(r => r.json())
       .then(data => {
         if (data.total  != null) setTotal(data.total);
