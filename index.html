@@ -1055,11 +1055,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   const countryMap = {
-    NP:'🇳🇵 Nepal', IN:'🇮🇳 India', US:'🇺🇸 USA', GB:'🇬🇧 UK',
-    AU:'🇦🇺 Australia', CN:'🇨🇳 China', DE:'🇩🇪 Germany',
-    CA:'🇨🇦 Canada', JP:'🇯🇵 Japan', KR:'🇰🇷 South Korea',
-    SG:'🇸🇬 Singapore', AE:'🇦🇪 UAE', NL:'🇳🇱 Netherlands',
-    FR:'🇫🇷 France', SE:'🇸🇪 Sweden', CH:'🇨🇭 Switzerland',
+    NP:'🇳🇵 Nepal',
   };
 
   // ── 1. Register visit ──
@@ -1088,13 +1084,13 @@ document.addEventListener('DOMContentLoaded', () => {
       if (youlocEl) youlocEl.textContent = '—';
     });
 
-  // ── 2. Heartbeat every 25s ──
+  // ── 2. Heartbeat every 15s ──
   setInterval(() => {
     fetch(API + '/api/heartbeat?sid=' + tabSid, { method: 'POST', cache: 'no-store' })
       .then(r => r.json())
       .then(data => { if (data.active != null) setLive(data.active); })
       .catch(() => {});
-  }, 25000);
+  }, 15000);
 
   // ── 3. Poll every 10s — fresh fetch every time, no caching ──
   setInterval(() => {
