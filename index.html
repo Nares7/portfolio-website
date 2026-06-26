@@ -438,156 +438,236 @@ document.querySelectorAll('a[href^="#"]').forEach(a=>{a.addEventListener('click'
       <div class="divider"></div>
     </div>
 
-    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px">
-      <a href="https://scholar.google.com" target="_blank" class="btn btn-outline" style="font-size:.76rem;padding:8px 16px">
-        <i class="fas fa-graduation-cap"></i> Google Scholar
-      </a>
-      <a href="https://www.researchgate.net" target="_blank" class="btn btn-primary" style="font-size:.76rem;padding:8px 16px">
-        <i class="fab fa-researchgate"></i> ResearchGate
-      </a>
-    </div>
+```
+<div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px">
+  <a href="https://scholar.google.com" target="_blank" class="btn btn-outline" style="font-size:.76rem;padding:8px 16px">
+    <i class="fas fa-graduation-cap"></i> Google Scholar
+  </a>
+  <a href="https://www.researchgate.net" target="_blank" class="btn btn-primary" style="font-size:.76rem;padding:8px 16px">
+    <i class="fab fa-researchgate"></i> ResearchGate
+  </a>
+</div>
 
-    <div class="rs-grid reveal">
-      <div class="rs-card"><span class="rs-num counter" data-n="4">0</span><span class="rs-lbl">Published Papers</span></div>
-      <div class="rs-card"><span class="rs-num counter" data-n="3">0</span><span class="rs-lbl">Under Review</span></div>
-      <div class="rs-card"><span class="rs-num counter" data-n="1">0</span><span class="rs-lbl">In Preparation</span></div>
-      <div class="rs-card"><span class="rs-num">25+</span><span class="rs-lbl">Collaborators</span></div>
-    </div>
+<div class="rs-grid reveal">
+  <div class="rs-card"><span class="rs-num counter" data-n="4">0</span><span class="rs-lbl">Published Papers</span></div>
+  <div class="rs-card"><span class="rs-num counter" data-n="3">0</span><span class="rs-lbl">Under Review</span></div>
+  <div class="rs-card"><span class="rs-num counter" data-n="1">0</span><span class="rs-lbl">In Preparation</span></div>
+  <div class="rs-card"><span class="rs-num">25+</span><span class="rs-lbl">Collaborators</span></div>
+</div>
 
-    <!-- Published -->
-    <div class="pub-group reveal">
-      <div class="pub-group-hd">
-        <span class="pub-dot dot-pub"></span>
-        <h3>Published Papers</h3>
-        <span class="pub-cnt">4 Papers</span>
+<!-- Published -->
+<div class="pub-group reveal">
+  <div class="pub-group-hd">
+    <span class="pub-dot dot-pub"></span>
+    <h3>Published Papers</h3>
+    <span class="pub-cnt">4 Papers</span>
+  </div>
+
+  <div class="pub-cards">
+
+    <div class="pub-card">
+      <div class="pub-title">An interpretable machine learning approach for shear capacity prediction of prestressed UHPC bridge girders with GUI deployment</div>
+      <div class="pub-authors"><span class="me">Bhatta, N.</span>, Jaiswal, R., &amp; Muhit, I.B.</div>
+      <div class="pub-bottom">
+        <span class="pub-journal"><i class="fas fa-book"></i> <em>Structures</em>, 88, 111793</span>
+        <a href="https://doi.org/10.1016/j.istruc.2026.111793" target="_blank" class="pub-doi"><i class="fas fa-external-link-alt"></i> DOI</a>
+        <a href="http://ec2-16-171-2-216.eu-north-1.compute.amazonaws.com/" target="_blank" class="pub-doi" style="color:var(--gold)"><i class="fas fa-desktop"></i> GUI Tool</a>
+        <span class="pub-cite"><i class="fas fa-quote-right"></i> 3+ citations</span>
+        <span style="font-size:.68rem;color:var(--muted);font-weight:600">2026</span>
       </div>
-      <div class="pub-cards">
-        <div class="pub-card">
-          <div class="pub-title">An interpretable machine learning approach for shear capacity prediction of prestressed UHPC bridge girders with GUI deployment</div>
-          <div class="pub-authors"><span class="me">Bhatta, N.</span>, Jaiswal, R., &amp; Muhit, I.B.</div>
-          <div class="pub-bottom">
-            <span class="pub-journal"><i class="fas fa-book"></i> <em>Structures</em>, 88, 111793</span>
-            <a href="https://doi.org/10.1016/j.istruc.2026.111793" target="_blank" class="pub-doi"><i class="fas fa-external-link-alt"></i> DOI</a>
-            <a href="http://ec2-16-171-2-216.eu-north-1.compute.amazonaws.com/" target="_blank" class="pub-doi" style="color:var(--gold)"><i class="fas fa-desktop"></i> GUI Tool</a>
-            <span class="pub-cite"><i class="fas fa-quote-right"></i> 3+ citations</span>
-            <span style="font-size:.68rem;color:var(--muted);font-weight:600">2026</span>
-          </div>
-          <div class="pub-tags"><span class="pub-tag">Machine Learning</span><span class="pub-tag">UHPC</span><span class="pub-tag">Bridge Engineering</span><span class="pub-tag">Interpretable ML</span><span class="pub-tag">GUI</span><span class="pub-tag">Analytical models</span></div>
-          <div class="prog-wrap"><div class="prog-bar"><div class="prog-in prog-pub" data-w="100"></div></div><span class="prog-txt">✓ Published · Elsevier · Q1 · Impact Factor 5.5</span></div>
-        </div>
-           
-        <div class="pub-card">
-          <div class="pub-title">Comparing crushed brick as coarse aggregate substitute in concrete: Experimental vs. numerical study</div>
-          <div class="pub-authors"><span class="me">Bhatta, N.</span>, Adhikari, A., Ghimire, A., Bhandari, N., Subedi, A., &amp; Sahani, K.</div>
-          <div class="pub-bottom">
-            <span class="pub-journal"><i class="fas fa-book"></i> <em>Iranian Journal of Science and Technology, Transactions of Civil Engineering</em></span>
-            <a href="https://doi.org/10.1007/s40996-024-01407-8" target="_blank" class="pub-doi"><i class="fas fa-external-link-alt"></i> DOI</a>
-            <span class="pub-cite"><i class="fas fa-quote-right"></i> 15+ citations</span>
-            <span style="font-size:.68rem;color:var(--muted);font-weight:600">2024</span>
-          </div>
-          <div class="pub-tags"><span class="pub-tag">Recycled Aggregate</span><span class="pub-tag">Crushed Brick</span><span class="pub-tag">FEM with Abaqus</span><span class="pub-tag">Experimental Study</span><span class="pub-tag">DT/NDT</span><span class="pub-tag">Concrete Technology</span><span class="pub-tag">Solid Waste Management</span></div>
-          <div class="prog-wrap"><div class="prog-bar"><div class="prog-in prog-pub" data-w="100"></div></div><span class="prog-txt">✓ Published · Springer Nature · Q2 · Impact Factor 2.5</span></div>
-        </div>
-           
-        <div class="pub-card">
-          <div class="pub-title">Predicting Freeze–Thaw Resistance in Geopolymer Concrete: Interpretable ML Model with Practical Deployment</div>
-          <div class="pub-authors">Jaiswal, R., <span class="me">Bhatta, N.</span>, Yadav, U.S., &amp; Jha, A.K.</div>
-          <div class="pub-bottom">
-            <span class="pub-journal"><i class="fas fa-book"></i> Journal of Materials in Civil Engineering</em>, 38(9)</span>
-            <a href="https://doi.org/10.1061/JMCEE7.MTENG-23191" target="_blank" class="pub-doi"><i class="fas fa-external-link-alt"></i> DOI</a>
-            <a href="http://ec2-13-60-232-74.eu-north-1.compute.amazonaws.com/" target="_blank" class="pub-doi" style="color:var(--gold)"><i class="fas fa-desktop"></i> GUI Tool</a>
-            <span class="pub-cite"><i class="fas fa-quote-right"></i> 1+ citations</span>
-            <span style="font-size:.68rem;color:var(--muted);font-weight:600">2026</span>
-          </div>
-          <div class="pub-tags">
-               <span class="pub-tag">Geopolymer Concrete</span>
-               <span class="pub-tag">Machine Learning</span>
-               <span class="pub-tag">Freeze-Thaw Resistance</span>
-               <span class="pub-tag">Explainable AI</span>
-               <span class="pub-tag">SHAP Analysis</span>
-               <span class="pub-tag">Durability</span>
-               <span class="pub-tag">Sustainable Materials</span>
-          </div>
-          <div class="prog-wrap"><div class="prog-bar"><div class="prog-in prog-pub" data-w="100"></div></div><span class="prog-txt">✓ Published · ASCE · Q1 · Impact Factor 3.2</span></div>
-        </div>
-           
-        <div class="pub-card">
-          <div class="pub-title">Feasibility of low-cost upcycling uncleaned waste glass as poorly graded fine aggregate (UPGWGFA) in concrete construction</div>
-          <div class="pub-authors">Sahani, K., Das, A.K., Kunwar, A., Dhakal, P., Kunwar, A., <span class="me">Bhatta, N.</span>, &amp; Maskey, R.K.</div>
-          <div class="pub-bottom">
-            <span class="pub-journal"><i class="fas fa-book"></i> <em>Construction and Building Materials</em>, 486, 141962</span>
-            <a href="https://doi.org/10.1016/j.conbuildmat.2025.141962" target="_blank" class="pub-doi"><i class="fas fa-external-link-alt"></i> DOI</a>
-            <span class="pub-cite"><i class="fas fa-quote-right"></i> 10+ citations</span>
-            <span style="font-size:.68rem;color:var(--muted);font-weight:600">2025</span>
-          </div>
-          <div class="pub-tags"><span class="pub-tag">Recycled Aggregate</span><span class="pub-tag">Waste Glass</span><span class="pub-tag">FEM with Abaqus</span><span class="pub-tag">Experimental Study</span><span class="pub-tag">DT/NDT</span><span class="pub-tag">Concrete Technology</span><span class="pub-tag">Upcycling</span><span class="pub-tag">Solid Waste Management</span></div>
-          <div class="prog-wrap"><div class="prog-bar"><div class="prog-in prog-pub" data-w="100"></div></div><span class="prog-txt">✓ Published · Elsevier · Q1 · Impact Factor 7.4</span></div>
-        </div>
+      <div class="pub-tags">
+        <span class="pub-tag">Machine Learning</span>
+        <span class="pub-tag">UHPC</span>
+        <span class="pub-tag">Bridge Engineering</span>
+        <span class="pub-tag">Interpretable ML</span>
+        <span class="pub-tag">GUI</span>
+        <span class="pub-tag">Analytical models</span>
+      </div>
+      <div class="prog-wrap">
+        <div class="prog-bar"><div class="prog-in prog-pub" data-w="100"></div></div>
+        <span class="prog-txt">✓ Published · Elsevier · Q1 · Impact Factor 5.5</span>
       </div>
     </div>
 
-    <!-- Under Review -->
-    <div class="pub-group reveal">
-      <div class="pub-group-hd">
-        <span class="pub-dot dot-rev"></span>
-        <h3>Under Review / Final Stage</h3>
-        <span class="pub-cnt">3 Papers</span>
-        </div>
-        <div class="pub-card rev">
-          <div class="pub-title">A Performance and Feasibility Study of Utilizing Concrete Waste as Fine Aggregate in Concrete With and Without Steel Fiber Reinforcement</div>
-          <div class="pub-authors"><span class="me">Bhatta, N.</span>, &amp; Bhatta, A.</div>
-          <div class="pub-bottom">
-            <span class="pub-journal"><i class="fas fa-book"></i> Journal of Materials in Civil Engineering</span>
-            <span style="font-size:.68rem;color:var(--muted);font-weight:600">2026</span>
-          </div>
-          <div class="pub-tags"><span class="pub-tag">Concrete Waste</span><span class="pub-tag">Steel Fiber</span><span class="pub-tag">Recycling</span><span class="pub-tag">Feasibility</span></div>
-          <div class="prog-wrap"><div class="prog-bar"><div class="prog-in prog-rev" data-w="80"></div></div><span class="prog-txt">Under peer review</span></div>
-        </div>
+    <div class="pub-card">
+      <div class="pub-title">Comparing crushed brick as coarse aggregate substitute in concrete: Experimental vs. numerical study</div>
+      <div class="pub-authors"><span class="me">Bhatta, N.</span>, Adhikari, A., Ghimire, A., Bhandari, N., Subedi, A., &amp; Sahani, K.</div>
+      <div class="pub-bottom">
+        <span class="pub-journal"><i class="fas fa-book"></i> <em>Iranian Journal of Science and Technology, Transactions of Civil Engineering</em></span>
+        <a href="https://doi.org/10.1007/s40996-024-01407-8" target="_blank" class="pub-doi"><i class="fas fa-external-link-alt"></i> DOI</a>
+        <span class="pub-cite"><i class="fas fa-quote-right"></i> 15+ citations</span>
+        <span style="font-size:.68rem;color:var(--muted);font-weight:600">2024</span>
       </div>
-        <div class="pub-cards">
-        <div class="pub-card rev">
-          <div class="pub-title">Explainable Machine Learning for Capacity and Failure Mode Prediction of RC Beams Strengthened with UHPC Overlays</div>
-          <div class="pub-authors"><span class="me">Bhatta, N.</span>, Jaiswal, R., Al Hawarneh, A., &amp; Tabsh, S.</div>
-          <div class="pub-bottom">
-            <span class="pub-journal"><i class="fas fa-book"></i> Manuscript in preparation</span>
-            <span style="font-size:.68rem;color:var(--muted);font-weight:600">2026</span>
-          </div>
-          <div class="pub-tags"><span class="pub-tag">ML</span><span class="pub-tag">RC Beams</span><span class="pub-tag">UHPC Overlay</span><span class="pub-tag">Failure Mode</span></div>
-          <div class="prog-wrap"><div class="prog-bar"><div class="prog-in prog-rev" data-w="65"></div></div><span class="prog-txt">In preparation — Writing</span></div>
-        </div>
-        <div class="pub-card rev">
-          <div class="pub-title">Synthetic Data-augmented Machine Learning for Predicting Flexural Capacity of UHPC-strengthened RC Beams</div>
-          <div class="pub-authors"><span class="me">Bhatta, N.</span>, Jaiswal, R., Pandit, P., &amp; Muhit, I.B.</div>
-          <div class="pub-bottom">
-            <span class="pub-journal"><i class="fas fa-book"></i> Engineering Structures</span>
-            <span style="font-size:.68rem;color:var(--muted);font-weight:600">2026</span>
-          </div>
-          <div class="pub-tags"><span class="pub-tag">VAE</span><span class="pub-tag">Synthetic Data</span><span class="pub-tag">Strengthening</span><span class="pub-tag">UHPC</span><span class="pub-tag">RC Beams</span></div>
-          <div class="prog-wrap"><div class="prog-bar"><div class="prog-in prog-rev" data-w="85"></div></div><span class="prog-txt">Under peer review</span></div>
+      <div class="pub-tags">
+        <span class="pub-tag">Recycled Aggregate</span>
+        <span class="pub-tag">Crushed Brick</span>
+        <span class="pub-tag">FEM with Abaqus</span>
+        <span class="pub-tag">Experimental Study</span>
+        <span class="pub-tag">DT/NDT</span>
+        <span class="pub-tag">Concrete Technology</span>
+        <span class="pub-tag">Solid Waste Management</span>
+      </div>
+      <div class="prog-wrap">
+        <div class="prog-bar"><div class="prog-in prog-pub" data-w="100"></div></div>
+        <span class="prog-txt">✓ Published · Springer Nature · Q2 · Impact Factor 2.5</span>
       </div>
     </div>
 
-    <!-- In Preparation -->
-    <div class="pub-group reveal">
-      <div class="pub-group-hd">
-        <span class="pub-dot dot-prep"></span>
-        <h3>In Preparation</h3>
-        <span class="pub-cnt">1 Paper</span>
+    <div class="pub-card">
+      <div class="pub-title">Predicting Freeze–Thaw Resistance in Geopolymer Concrete: Interpretable ML Model with Practical Deployment</div>
+      <div class="pub-authors">Jaiswal, R., <span class="me">Bhatta, N.</span>, Yadav, U.S., &amp; Jha, A.K.</div>
+      <div class="pub-bottom">
+        <span class="pub-journal"><i class="fas fa-book"></i> <em>Journal of Materials in Civil Engineering</em>, 38(9)</span>
+        <a href="https://doi.org/10.1061/JMCEE7.MTENG-23191" target="_blank" class="pub-doi"><i class="fas fa-external-link-alt"></i> DOI</a>
+        <a href="http://ec2-13-60-232-74.eu-north-1.compute.amazonaws.com/" target="_blank" class="pub-doi" style="color:var(--gold)"><i class="fas fa-desktop"></i> GUI Tool</a>
+        <span class="pub-cite"><i class="fas fa-quote-right"></i> 1+ citations</span>
+        <span style="font-size:.68rem;color:var(--muted);font-weight:600">2026</span>
       </div>
-        <div class="pub-card prep">
-          <div class="pub-title">Structural performance of bamboo-reinforced bio-composite beams with lime-based alternative binders</div>
-          <div class="pub-authors"><span class="me">Bhatta, N.</span>, Neupane, U.M., &amp; Ghimire, A.</div>
-          <div class="pub-bottom">
-            <span class="pub-journal"><i class="fas fa-book"></i> Target - Construction and Building Materials (Elsevier) — In preparation</span>
-            <span style="font-size:.68rem;color:var(--muted);font-weight:600">2026</span>
-          </div>
-          <div class="pub-tags"><span class="pub-tag">Bamboo Reinforcement</span><span class="pub-tag">Bio-Composite</span><span class="pub-tag">Geopolymer</span><span class="pub-tag">Low-Carbon</span></div>
-          <div class="prog-wrap"><div class="prog-bar"><div class="prog-in prog-prep" data-w="55"></div></div><span class="prog-txt">In preparation — ongoing lab work</span></div>
-        </div>
+      <div class="pub-tags">
+        <span class="pub-tag">Geopolymer Concrete</span>
+        <span class="pub-tag">Machine Learning</span>
+        <span class="pub-tag">Freeze-Thaw Resistance</span>
+        <span class="pub-tag">Explainable AI</span>
+        <span class="pub-tag">SHAP Analysis</span>
+        <span class="pub-tag">Durability</span>
+        <span class="pub-tag">Sustainable Materials</span>
+      </div>
+      <div class="prog-wrap">
+        <div class="prog-bar"><div class="prog-in prog-pub" data-w="100"></div></div>
+        <span class="prog-txt">✓ Published · ASCE · Q1 · Impact Factor 3.2</span>
+      </div>
+    </div>
+
+    <div class="pub-card">
+      <div class="pub-title">Feasibility of low-cost upcycling uncleaned waste glass as poorly graded fine aggregate (UPGWGFA) in concrete construction</div>
+      <div class="pub-authors">Sahani, K., Das, A.K., Kunwar, A., Dhakal, P., Kunwar, A., <span class="me">Bhatta, N.</span>, &amp; Maskey, R.K.</div>
+      <div class="pub-bottom">
+        <span class="pub-journal"><i class="fas fa-book"></i> <em>Construction and Building Materials</em>, 486, 141962</span>
+        <a href="https://doi.org/10.1016/j.conbuildmat.2025.141962" target="_blank" class="pub-doi"><i class="fas fa-external-link-alt"></i> DOI</a>
+        <span class="pub-cite"><i class="fas fa-quote-right"></i> 10+ citations</span>
+        <span style="font-size:.68rem;color:var(--muted);font-weight:600">2025</span>
+      </div>
+      <div class="pub-tags">
+        <span class="pub-tag">Recycled Aggregate</span>
+        <span class="pub-tag">Waste Glass</span>
+        <span class="pub-tag">FEM with Abaqus</span>
+        <span class="pub-tag">Experimental Study</span>
+        <span class="pub-tag">DT/NDT</span>
+        <span class="pub-tag">Concrete Technology</span>
+        <span class="pub-tag">Upcycling</span>
+        <span class="pub-tag">Solid Waste Management</span>
+      </div>
+      <div class="prog-wrap">
+        <div class="prog-bar"><div class="prog-in prog-pub" data-w="100"></div></div>
+        <span class="prog-txt">✓ Published · Elsevier · Q1 · Impact Factor 7.4</span>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Under Review -->
+<div class="pub-group reveal">
+  <div class="pub-group-hd">
+    <span class="pub-dot dot-rev"></span>
+    <h3>Under Review / Final Stage</h3>
+    <span class="pub-cnt">3 Papers</span>
+  </div>
+
+  <div class="pub-cards">
+
+    <div class="pub-card rev">
+      <div class="pub-title">A Performance and Feasibility Study of Utilizing Concrete Waste as Fine Aggregate in Concrete With and Without Steel Fiber Reinforcement</div>
+      <div class="pub-authors"><span class="me">Bhatta, N.</span>, &amp; Bhatta, A.</div>
+      <div class="pub-bottom">
+        <span class="pub-journal"><i class="fas fa-book"></i> Journal of Materials in Civil Engineering</span>
+        <span style="font-size:.68rem;color:var(--muted);font-weight:600">2026</span>
+      </div>
+      <div class="pub-tags">
+        <span class="pub-tag">Concrete Waste</span>
+        <span class="pub-tag">Steel Fiber</span>
+        <span class="pub-tag">Recycling</span>
+        <span class="pub-tag">Feasibility</span>
+      </div>
+      <div class="prog-wrap">
+        <div class="prog-bar"><div class="prog-in prog-rev" data-w="80"></div></div>
+        <span class="prog-txt">Under peer review</span>
+      </div>
+    </div>
+
+    <div class="pub-card rev">
+      <div class="pub-title">Explainable Machine Learning for Capacity and Failure Mode Prediction of RC Beams Strengthened with UHPC Overlays</div>
+      <div class="pub-authors"><span class="me">Bhatta, N.</span>, Jaiswal, R., Al Hawarneh, A., &amp; Tabsh, S.</div>
+      <div class="pub-bottom">
+        <span class="pub-journal"><i class="fas fa-book"></i> Manuscript in preparation</span>
+        <span style="font-size:.68rem;color:var(--muted);font-weight:600">2026</span>
+      </div>
+      <div class="pub-tags">
+        <span class="pub-tag">ML</span>
+        <span class="pub-tag">RC Beams</span>
+        <span class="pub-tag">UHPC Overlay</span>
+        <span class="pub-tag">Failure Mode</span>
+      </div>
+      <div class="prog-wrap">
+        <div class="prog-bar"><div class="prog-in prog-rev" data-w="65"></div></div>
+        <span class="prog-txt">In preparation — Writing</span>
+      </div>
+    </div>
+
+    <div class="pub-card rev">
+      <div class="pub-title">Synthetic Data-augmented Machine Learning for Predicting Flexural Capacity of UHPC-strengthened RC Beams</div>
+      <div class="pub-authors"><span class="me">Bhatta, N.</span>, Jaiswal, R., Pandit, P., &amp; Muhit, I.B.</div>
+      <div class="pub-bottom">
+        <span class="pub-journal"><i class="fas fa-book"></i> Engineering Structures</span>
+        <span style="font-size:.68rem;color:var(--muted);font-weight:600">2026</span>
+      </div>
+      <div class="pub-tags">
+        <span class="pub-tag">VAE</span>
+        <span class="pub-tag">Synthetic Data</span>
+        <span class="pub-tag">Strengthening</span>
+        <span class="pub-tag">UHPC</span>
+        <span class="pub-tag">RC Beams</span>
+      </div>
+      <div class="prog-wrap">
+        <div class="prog-bar"><div class="prog-in prog-rev" data-w="85"></div></div>
+        <span class="prog-txt">Under peer review</span>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- In Preparation -->
+<div class="pub-group reveal">
+  <div class="pub-group-hd">
+    <span class="pub-dot dot-prep"></span>
+    <h3>In Preparation</h3>
+    <span class="pub-cnt">1 Paper</span>
+  </div>
+
+  <div class="pub-cards">
+    <div class="pub-card prep">
+      <div class="pub-title">Structural performance of bamboo-reinforced bio-composite beams with lime-based alternative binders</div>
+      <div class="pub-authors"><span class="me">Bhatta, N.</span>, Neupane, U.M., &amp; Ghimire, A.</div>
+      <div class="pub-bottom">
+        <span class="pub-journal"><i class="fas fa-book"></i> Target - Construction and Building Materials (Elsevier) — In preparation</span>
+        <span style="font-size:.68rem;color:var(--muted);font-weight:600">2026</span>
+      </div>
+      <div class="pub-tags">
+        <span class="pub-tag">Bamboo Reinforcement</span>
+        <span class="pub-tag">Bio-Composite</span>
+        <span class="pub-tag">Geopolymer</span>
+        <span class="pub-tag">Low-Carbon</span>
+      </div>
+      <div class="prog-wrap">
+        <div class="prog-bar"><div class="prog-in prog-prep" data-w="55"></div></div>
+        <span class="prog-txt">In preparation — ongoing lab work</span>
       </div>
     </div>
   </div>
+</div>
 </section>
+
 
 
 <!-- ══════════════════════════════════════════════
